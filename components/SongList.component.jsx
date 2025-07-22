@@ -160,7 +160,7 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
       setIsFavorite(isLocal);
     }, [EffThis, songInfo]);
 
-    const hasRecord = get_artwork_url(BVID.trim().split(/，/g)) !== '/favicon.png'; 
+    const hasRecord = get_artwork_url(BVID.trim().split(/，/g)) !== '/cover.png'; 
 
     const [showLove, setShowLove] = useState(false);
 
@@ -352,7 +352,7 @@ export default function SongList
         }
         bvid_list = bvid_list_plain.split(/，/g);
       }
-      let artwork_url = '/favicon.png';
+      let artwork_url = '/cover.png';
       if (bvid_list !== null && bvid_list.length > 0) {
         let latest_bvid = bvid_list[bvid_list.length - 1];
         if (latest_bvid.endsWith("，")) {
@@ -407,7 +407,7 @@ export default function SongList
                         unoptimized
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = "/favicon.png";
+                          e.target.src = "/cover.png";
                         }}
                         layout="fill"
                         objectFit="cover"

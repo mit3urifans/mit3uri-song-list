@@ -170,13 +170,13 @@ const HeaderView = ({ props: [EffThis] }) => {
             <BlurFade delay={0.25} inView>
               <div className="mr-2 ml-[1rem] hidden relative sm:w-[9rem] sm:h-[9rem] sm:block">
                 <Image
-                  src={avatarUrl}
+                  src="mit3uri.jpg"
                   alt="liver-avatar"
                   loader={({ src }) => src}
                   layout="fill"
                   objectFit="contain"
                   unoptimized
-                  className="rounded-full"
+                  className="rounded-full spin-back"
                 />
               </div>
             </BlurFade>
@@ -184,25 +184,25 @@ const HeaderView = ({ props: [EffThis] }) => {
               <div className="flex items-center ml-[1rem] mb-2">
                 <div className="mr-2 w-[3.5rem] h-[3.5rem] relative sm:hidden">
                   <Image
-                    src={avatarUrl}
+                    src="mit3uri.jpg"
                     alt="liver-avatar"
                     loader={({ src }) => src}
                     layout="fill"
                     objectFit="contain"
                     unoptimized
-                    className="rounded-full"
+                    className="rounded-full spin-back"
                   />
                 </div>
                 <div className="text-base text-label flex-col relative">
                   <span className="font-bold block sm:text-title w-fit relative">
                     <BlurFade delay={0} inView>
                       <span>{config.Name}</span>
-                      <StyledI
+                      {/* <StyledI
                         className="absolute top-0 right-0"
                         handleClick={() => {
                           setClicks(clicks + 1);
                         }}
-                      />
+                      /> */}
                     </BlurFade>
                   </span>
                   <BlurFade className="relative z-[10]" delay={0.05} inView>
@@ -223,7 +223,7 @@ const HeaderView = ({ props: [EffThis] }) => {
                         h-[1.5rem] rounded-full right-0 hidden sm:flex
                         items-center justify-center flex-row space-x-1 px-2"
                         onClick={() => {
-                          window.open();
+                          window.open('https://docs.qq.com/sheet/DSU9MVFVVVGVGR3Bz', '_blank');
                         }}
                       >
                         <HiMiniPlusCircle className="text-xs inline text-accent-fg" />

@@ -1,9 +1,9 @@
 const config = {
-  Name: "岁己SUI", // 主页名字
+  Name: "三理Mit3uri", // 主页名字
 
-  BiliLiveRoomID: "25788785", // Bilibili直播间id
+  BiliLiveRoomID: "1967216004", // Bilibili直播间id
 
-  VRMember: "https://vrp.live/member/SUI",
+  // VRMember: "https://vrp.live/member/SUI",
 
   Footer: "Github",
 
@@ -12,13 +12,21 @@ const config = {
   customCursorEnabled: true, // 使用自定义光标图片
   cursorVersion: "v2",
 
-  LanguageCategories: ["日语", "英语"], // 语言分类
+  LanguageCategories: ["日语", "英语", "韩语"], // 语言分类
   RemarkCategories: [], // 标签分类
 
   // 自定义按钮 （可以复制生成更多）
   HomeList: [
     {
-      url: "https://live.bilibili.com/25788785",
+      url: "https://space.bilibili.com/2030198123",
+      name: "个人空间",
+      icon: "/assets/icon/bilibili_logo_padded.png",
+      background: "bg-bilibili-bg",
+      textcolor: "text-bilibili-fg",
+      shadowcolor: "shadow-bilibili-fg"
+    },
+    {
+      url: "https://live.bilibili.com/1967216004",
       name: "直播间",
       icon: "/assets/icon/bilibili_logo_padded.png",
       background: "bg-bilibili-bg",
@@ -26,29 +34,13 @@ const config = {
       shadowcolor: "shadow-bilibili-fg"
     },
     {
-      url: "https://pome.vip/Gz75k7hF",
+      url: "https://pome.vip/0ec1ecd21515",
       name: "提问箱",
       icon: "/assets/icon/pome.png",
       background: "bg-pome-bg",
       textcolor: "text-pome-fg",
       shadowcolor: "shadow-pome-fg"
-    },
-    {
-      url: "https://weibo.com/u/7785772638",
-      name: "微博",
-      icon: "/assets/icon/weibo.png",
-      background: "bg-weibo-bg",
-      textcolor: "text-weibo-fg",
-      shadowcolor: "shadow-weibo-fg"
-    },
-    {
-      url: "https://vrp.live/member/SUI",
-      name: "官网介绍",
-      icon: "/assets/images/self_intro.png",
-      background: "bg-vr-bg",
-      textcolor: "text-vr-fg",
-      shadowcolor: "shadow-vr-fg"
-    },
+    }
   ],
 
   theme: {
