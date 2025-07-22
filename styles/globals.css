@@ -132,3 +132,11 @@ a {
     mask: linear-gradient(180deg, black 50%, transparent 100%);
   }
 }
+
+.spin-back {
+  transition: transform 0.6s ease-in-out;
+}
+
+.spin-back:hover {
+  transform: rotate(360deg);
+}

@@ -58,7 +58,7 @@ const FeaturedSongItem = (props) => {
         </div>
       </div>
       <div className="flex flex-row items-start pr-10">
-        <span className={`text-label flex flex-row items-center ${get_artwork_url(bvid_list) !== "/favicon.png" ? "inline" : "hidden"}`}>
+        <span className={`text-label flex flex-row items-center ${get_artwork_url(bvid_list) !== "/cover.png" ? "inline" : "hidden"}`}>
           <span className="text-accent">{bili2_icon()}</span>
           <HiMiniPlay className="mr-1 ml-3" onClick={
             () => {
@@ -95,7 +95,7 @@ const FeaturedSongItem = (props) => {
             }
           </span>
         </span>
-        <span className={`flex flex-row ${get_artwork_url(bvid_list) !== "/favicon.png" ? "hidden" : "inline"}`}>
+        <span className={`flex flex-row ${get_artwork_url(bvid_list) !== "/cover.png" ? "hidden" : "inline"}`}>
           <span className={`ml-[0.5rem] h-[1.2rem] inline-flex 
             items-center rounded-full
             px-2 py-1 font-medium mr-2

@@ -66,7 +66,7 @@ const MusicPlayerView = ({ props: [idx, EffThis] }) => {
     setIsPlaying(!isPlaying);
   }
 
-  const [artworkUrl, setArtworkUrl] = useState("favicon.png");
+  const [artworkUrl, setArtworkUrl] = useState("cover.png");
   const [bvid, setBvid] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -209,7 +209,7 @@ const MusicPlayerView = ({ props: [idx, EffThis] }) => {
             layout='fill' objectFit='contain'
             onError={
               async () => {
-                setArtworkUrl("favicon.png");
+                setArtworkUrl("cover.png");
                 await new Promise(r => setTimeout(r, 1000));
                 await fetch_artwork(bvid);
               }

@@ -399,8 +399,8 @@ export default function Home() {
         }
         <section className={"main-section"}>
           <HeaderView props={[EffThis]}/>
-          <FeaturedSongList effthis={EffThis} datasrc={
-            async () => {
+          {/* <FeaturedSongList effthis={EffThis} datasrc={
+            async (song_list) => {
               let list = null;
               await fetch("/api/v2/featured")
                 .then((res) => res.json())
@@ -409,7 +409,7 @@ export default function Home() {
                 });
               return list;
             }
-          } title="听啥呢饼" />
+          } title="听啥呢饼" /> */}
           <FeaturedSongList effthis={EffThis} datasrc={
               async (list) => {
                 list.sort((a, b) => {

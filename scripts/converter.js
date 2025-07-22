@@ -13,7 +13,7 @@ const cnchar = require('cnchar');
 const getPinyinFirstLetter = str => cnchar.spell(str);
 const cnpy1st = getPinyinFirstLetter;
 
-const src = path.resolve(__dirname, './music.xlsx')
+const src = path.resolve(__dirname, './Book1.xlsx')
 const dest = path.resolve(__dirname, '../public/music_list.json')
 
 const loadSongList = async ({src, dest}) => {
