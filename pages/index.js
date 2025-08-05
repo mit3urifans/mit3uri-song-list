@@ -243,7 +243,7 @@ export default function Home() {
 
   }, [EffThis]);
 
-  const [dynamicTheme, setDynamicTheme] = useState(true);
+  const [dynamicTheme, setDynamicTheme] = useState(false);
   const videoRef = React.useRef(null);
   useEffect(() => {
     setDynamicTheme(config.theme[theme].dynamic);
@@ -300,7 +300,7 @@ export default function Home() {
           as="image"
           type="image/gif"
         /> */}
-        <link
+        {/* <link
           rel="preload"
           href="/assets/images/question_mark.gif"
           as="image"
@@ -311,13 +311,13 @@ export default function Home() {
           href='/api/v2/avatar'
           as="image"
           type='image/webp'
-        />
-        <link
+        /> */}
+        {/* <link
           rel="preload"
           href='/assets/images/theme/header_shining_front.png'
           as="image"
           type='image/png'
-        />
+        /> */}
       </Head>
 
       <div
