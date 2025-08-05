@@ -7,7 +7,7 @@ const config = {
 
   Footer: "Github",
 
-  Repository: "https://github.com/starsJuly/sui-song-list.git",
+  Repository: "https://github.com/mit3urifans/mit3uri-song-list.git",
 
   customCursorEnabled: true, // 使用自定义光标图片
   cursorVersion: "v2",
@@ -34,7 +34,7 @@ const config = {
       shadowcolor: "shadow-bilibili-fg"
     },
     {
-      url: "https://pome.vip/0ec1ecd21515",
+      url: "https://pome.vip/0ec1ecd215",
       name: "提问箱",
       icon: "/assets/icon/pome.png",
       background: "bg-pome-bg",
@@ -44,36 +44,8 @@ const config = {
   ],
 
   theme: {
-    'light':  {
-      name: '爱之类的话语',
-      dynamic: false,
-    },
-    'dark': {
-      name: '魔偶马戏团',
-      dynamic: false,
-    },
-    'flower': {
-      name: '花做成的海',
-      dynamic: false,
-    },
-    'marvelous': {
-      name: '奇妙夜',
-      dynamic: false,
-    },
-    'brisk': {
-      name: '白云红叶两悠悠',
-      dynamic: true,
-    },
-    'idol': {
-      name: '娉婷似不任罗绮',
-      dynamic: false,
-    },
-    'lazy': {
-      name: '懒倦慵吟守岁诗',
-      dynamic: false,
-    },
     'shining': {
-      name: 'Effulgence',
+      name: '星光舞台',
       dynamic: false,
     },
   }

@@ -10,6 +10,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   scroll-behavior: smooth;
   @apply bg-main-page-background;
+  overflow-x: hidden;
 }
 
 a {
@@ -48,10 +49,10 @@ a {
   height: 10px;
   width: 10px;
 }
-
+/* 
 ::-webkit-scrollbar {
-  display: none;
-}
+  overflow-y: scroll;
+} */
 
 /* Up Arrow */
 ::-webkit-scrollbar-button:single-button:vertical:decrement {

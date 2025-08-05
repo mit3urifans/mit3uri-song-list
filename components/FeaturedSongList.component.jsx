@@ -162,9 +162,9 @@ const FeaturedSongList = (props) => {
       <div className="pl-3 pr-3 mt-3 w-[100vw] sm:max-w-[1100px] relative">
         <div className="inline-block w-[100%] overflow-x-hidden">
           <div className="flex flex-row items-center mb-2">
-            <div className="w-[1.5rem] h-[1.5rem]  relative mr-1 rounded-full overflow-hidden">
+            <div className="w-[2.5rem] h-[2.5rem]  relative mr-1 rounded-full overflow-hidden">
               <Image
-                src={"/assets/images/emoticon_stars_in_your_eyes.webp"}
+                src={"/assets/images/emoticon_glasses_low.png"}
                 width={0}
                 height={0}
                 sizes="100vw"

@@ -35,10 +35,10 @@ export default function SongListFilter({ props: [ filter_state, searchBox, EffTh
           font-semibold items-center sm:hidden text-secondary-label mb-2"
         >
           <div className='w-[1.5rem] h-[1.5rem] relative mr-1 rounded-full overflow-hidden'>
-            <Image src={'/assets/images/emoticon_heng.webp'}
+            {/* <Image src={'/assets/images/emoticon_heng.webp'}
               width={0} height={0} sizes='100vw' layout='fill'
               unoptimized objectFit='cover' alt='heng'
-            />
+            /> */}
           </div>
           <span>筛选</span>
         </div>

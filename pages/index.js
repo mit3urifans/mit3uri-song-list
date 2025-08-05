@@ -36,15 +36,9 @@ import styled, { css } from "styled-components";
 
 import { song_list } from '../config/song_list'
 
-import headerImage from '../public/assets/images/theme/header.webp'
-import headerImageDark from '../public/assets/images/theme/header_dark.webp'
-import headerImageFlower from '../public/assets/images/theme/header_flower.webp'
-import headerImageMarvelous from '../public/assets/images/theme/header_marvelous.webp'
-import headerImageBrisk from '../public/assets/images/theme/header_brisk.webp'
-import headerImageIdol from '../public/assets/images/theme/header_idol.webp'
-import headerImageLazy from '../public/assets/images/theme/header_lazy.webp'
-import headerImageShining from '../public/assets/images/theme/header_shining.webp'
-import headerImageShiningFront from '../public/assets/images/theme/header_shining_front.png'
+import headerImage from '../public/assets/images/theme/header.png'
+import headerImageShining from '../public/assets/images/theme/header.png'
+import headerImageShiningFront from '../public/assets/images/theme/header.png'
 
 import {
   BsPalette2
@@ -285,7 +279,7 @@ export default function Home() {
         />
         <meta name="description" content={`${config.Name}的歌单`} />
         <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
-        <link
+        {/* <link
           rel="preload"
           href="/assets/images/emoticon_love.webp"
           as="image"
@@ -305,7 +299,7 @@ export default function Home() {
           href="/assets/images/bgs1314baobaomuamualovelove.gif"
           as="image"
           type="image/gif"
-        />
+        /> */}
         <link
           rel="preload"
           href="/assets/images/question_mark.gif"
@@ -335,14 +329,7 @@ export default function Home() {
             <Image
               src={(() => {
                 switch (theme) {
-                  case 'dark': return headerImageDark;
-                  case 'light': return headerImage;
-                  case 'flower': return headerImageFlower;
-                  case 'marvelous': return headerImageMarvelous;
-                  case 'brisk': return headerImageBrisk;
-                  case 'idol': return headerImageIdol;
-                  case 'lazy': return headerImageLazy;
-                  case 'shining': return headerImageShining;
+                  case 'shining': return headerImage;
                   default: return headerImage;
                 }
               })()}
@@ -430,7 +417,7 @@ export default function Home() {
           } title="最近更新"/>
           <SongListFilter props={[filter_state, searchBox, EffThis]} />
           <FilteredList props={[filter_state, searchBox, EffThis]} />
-          <MusicPlayerView props={[currently_playing, EffThis]} />
+          {/* <MusicPlayerView props={[currently_playing, EffThis]} /> */}
         </section>
 
         <FixedTool />
@@ -599,10 +586,10 @@ function SongListWrapper ({ props: [ List, EffThis ] }) {
     <Container fluid style = {{ minWidth: 'min-content' }}>
      <div className = { styles.songListMarco }>
         <div className='flex flex-row items-center'>
-          <div className='w-[1.5rem] h-[1.5rem] relative mr-1 rounded-full overflow-hidden'>
-            <Image src={'/assets/images/emoticon_hengheng.webp'}
+          <div className='w-[2.5rem] h-[2.5rem] relative mr-1 rounded-full overflow-hidden'>
+            <Image src={'/assets/images/emoticon_surprise_low.png'}
               width={0} height={0} sizes='100vw' layout='fill'
-              unoptimized objectFit='cover' alt='hengheng'
+              unoptimized objectFit='cover' alt='surprise'
             />
           </div>
           <span className='text-subtitle text-secondary-label font-semibold'>

@@ -6,15 +6,11 @@ import NumberTicker from "../components/NumberTicker.component";
 import BlurFade from "./ui/blur-fade";
 import confetti from "canvas-confetti";
 
-import { HiHeart } from "react-icons/hi";
 import { HiMiniPlusCircle } from "react-icons/hi2";
 import { BsPalette2 } from "react-icons/bs";
 import { RiPaletteFill } from "react-icons/ri";
 
 import { motion } from "framer-motion";
-
-import question_mark from "../public/assets/images/question_mark.gif";
-import bgs1314baobaomuamualovelove from "../public/assets/images/bgs1314baobaomuamualovelove.gif";
 
 const HomeList = () => {
   return (
@@ -59,58 +55,6 @@ const HomeList = () => {
         })}
       </div>
     </>
-  );
-};
-
-const StyledI = ({ handleClick }) => {
-  const [text, setText] = useState("点点试试呢");
-  const [clicks, setClicks] = useState(1);
-  useEffect(() => {
-    if (clicks > 5) {
-      setText("bgs1314baobaomuamualovelove");
-    } else if (clicks > 2) {
-      setText("再多试几次");
-    }
-  }, [clicks]);
-  return (
-    <div className="absolute bottom-0 right-0 text-base sm:text-title flex flex-col items-center text-label group/heart pointer-events-none">
-      <div
-        className="font-normal text-base absolute 
-        right-0 -top-[3rem] shrink-0 text-nowrap backdrop-blur-xl opacity-0 transition-all
-        inline sm:group-hover/heart:!opacity-100 text-right bg-accent/10 rounded-full px-3 py-1 duration-150"
-      >
-        <span className="flex flex-row items-center space-x-1">
-          <div className="relative w-[1.2rem] h-[1.2rem]">
-            <Image
-              src={clicks <= 5 ? question_mark : bgs1314baobaomuamualovelove}
-              width={0}
-              height={0}
-              sizes="100vw"
-              layout="fill"
-              objectFit="contain"
-              unoptimized
-              alt="cute_image"
-            />
-          </div>
-          <span>{text}</span>
-        </span>
-        <div className="w-10 h-10 absolute top-[1.80rem] left-10 overflow-hidden inline-block">
-          <div
-            className="w-[10px] h-[10px] right-6
-            -rotate-45 transform absolute -top-[5px]
-            backdrop-blur-xl bg-accent/10"
-          ></div>
-        </div>
-      </div>
-      <HiHeart
-        className="font-semibold !text-oen-red-2 text-[0.35rem] sm:text-base absolute bottom-[1.1rem] sm:bottom-[2.3rem] pointer-events-auto"
-        onClick={() => {
-          handleClick();
-          setClicks(clicks + 1);
-        }}
-      />
-      <span className="font-semibold">I</span>
-    </div>
   );
 };
 
@@ -197,12 +141,6 @@ const HeaderView = ({ props: [EffThis] }) => {
                   <span className="font-bold block sm:text-title w-fit relative">
                     <BlurFade delay={0} inView>
                       <span>{config.Name}</span>
-                      {/* <StyledI
-                        className="absolute top-0 right-0"
-                        handleClick={() => {
-                          setClicks(clicks + 1);
-                        }}
-                      /> */}
                     </BlurFade>
                   </span>
                   <BlurFade className="relative z-[10]" delay={0.05} inView>

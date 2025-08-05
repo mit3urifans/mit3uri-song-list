@@ -131,7 +131,7 @@ const PillList = ({ props: [song_info, song_idx, BVID, EffThis,] }) => {
           {bili2_icon()}
         </div> BiliBili
       </span>
-      <span className="ml-[0.5rem] h-[1.2rem] inline-flex 
+      {/* <span className="ml-[0.5rem] h-[1.2rem] inline-flex 
         items-center rounded-full
         px-2 py-1 font-medium 
       text-badge-play ring-1 ring-inset 
@@ -148,7 +148,7 @@ const PillList = ({ props: [song_info, song_idx, BVID, EffThis,] }) => {
         <div className="inline mr-[3px]">
           <BsPlayCircle />
         </div> 播放
-      </span>
+      </span> */}
     </div>
   );
 }
@@ -160,7 +160,8 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
       setIsFavorite(isLocal);
     }, [EffThis, songInfo]);
 
-    const hasRecord = get_artwork_url(BVID.trim().split(/，/g)) !== '/cover.png'; 
+    const BVIDParts = BVID.trim().split(/，/g).filter(s => s.trim() !== "");
+    const hasRecord = Array.isArray(BVIDParts) && BVIDParts.length > 0; 
 
     const [showLove, setShowLove] = useState(false);
 
