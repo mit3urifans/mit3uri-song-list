@@ -47,7 +47,7 @@ const config = {
     'shining': {
       name: '星光舞台',
       dynamic: false,
-    },
+    }
   }
 }
 
