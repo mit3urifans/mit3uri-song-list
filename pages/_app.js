@@ -19,7 +19,7 @@ function MyApp ({ Component, pageProps }) {
   return (
     <>
       <Head></Head>
-      <ThemeProvider enableSystem={false} defaultTheme='idol' attribute="data-theme" themes={['shining']}>
+      <ThemeProvider enableSystem={false} defaultTheme='shining' attribute="data-theme" themes={['shining']}>
         <Component {...pageProps} />
       </ThemeProvider>
       <ToastContainer
