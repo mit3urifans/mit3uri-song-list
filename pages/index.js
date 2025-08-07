@@ -16,6 +16,8 @@ import SongListFilter from '../components/SongListFilter.component'
 import MusicPlayerView from '../components/MusicPlayerView.component'
 import HeaderView from '../components/HeaderView.component'
 import FeaturedSongList from '../components/FeaturedSongList.component'
+import BirthdayOverlay from '../components/BirthdayOverlay.component';
+
 
 import imageLoader from '../utils/ImageLoader'
 
@@ -319,11 +321,13 @@ export default function Home() {
           type='image/png'
         /> */}
       </Head>
+      <BirthdayOverlay />
 
       <div
         className="z-[100] bg-gradient-to-b 
         from-transparent to-[30rem] w-screen"
       >
+
         <div className="absolute right-0 top-0 w-full sm:w-[85%] 3xl:w-[75%] 4xl:w-[70%] 5xl:w-[65%]">
           { !dynamicTheme ?
             <Image
