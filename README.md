@@ -1,13 +1,13 @@
-# SUI的歌单网站
+# 三理Mit3uri的歌单网站
 
-岁己SUI的歌单网站。也可用于简单构建其他vup/vtb的个人歌单网站。
+三理Mit3uri的歌单网站。也可用于简单构建其他vup/vtb的个人歌单网站。
 
-> Fork自 [雨纪Ameki的歌单](https://www.ameki.online/)
+> Fork自 [岁己SUI的歌单](https://suijisui.space/)
 
 ## Features
 
 ```
-# sui-song-list
+# mit3uri-song-list
 rules:
 + 永久禁用后台数据统计工具的支持
 + 响应式页面
@@ -138,12 +138,12 @@ features:
 
 持续更新，
 + 完善歌单信息，显示xlsx歌单文件中的更多内容
-+ 基于 *岁己SUI* 个人特色的页面风格
++ 基于 *三理Mit3uri* 个人特色的页面风格
 + 优化页面
 + 完善文档
 + ...
 
-另外，会尽可能同步更新 *岁己SUI* 最新歌单信息。如有歌单方面的遗漏或错误，或者使用时出现BUG，欢迎发issue和pull-request，或者加入Collaborator！
+另外，会尽可能同步更新 *三理Mit3uri* 最新歌单信息。如有歌单方面的遗漏或错误，或者使用时出现BUG，欢迎发issue和pull-request，或者加入Collaborator！
 
 感谢每一位贡献者。
 
@@ -239,8 +239,11 @@ features:
 
 ## Project Authors
 
-This is the list of sui-song-list's significant contributors.
+This is the list of mit3uri-song-list's significant contributors.
+理电池：
++ [mit3urifans](https://github.com/mit3urifans)
 
+饼干岁：
 + [starsJuly](https://github.com/starsJuly)
 + [RinSchomburg](https://github.com/RinSchomburg)
 + [SuperChipsAhoy](https://github.com/SuperChipsAhoy)
@@ -258,13 +261,8 @@ This is the list of sui-song-list's significant contributors.
 
 此处工作会存在遗漏，欢迎反馈，会及时进行添加/修改/删除。通常为添加时间的正序，排序不分先后。
 
-+ RinSchomburg
-+ starsJuly
-+ 蜜柑教信徒
-+ 岁己家的维斯
-+ 小笨酱_____________
-+ KpwnZ
-+ SuperChipsAhoy
++ sui-song-list的所有饼干岁
++ mit3urifans
 
 ## License
 
