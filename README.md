@@ -240,6 +240,7 @@ features:
 ## Project Authors
 
 This is the list of mit3uri-song-list's significant contributors.
+
 理电池：
 + [mit3urifans](https://github.com/mit3urifans)
 
