@@ -12,7 +12,7 @@ const config = {
   customCursorEnabled: true, // 使用自定义光标图片
   cursorVersion: "v2",
 
-  LanguageCategories: ["日语", "英语", "韩语"], // 语言分类
+  LanguageCategories: ["日语", "英语", "韩语", "粤语"], // 语言分类
   RemarkCategories: [], // 标签分类
 
   // 自定义按钮 （可以复制生成更多）
