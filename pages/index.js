@@ -16,7 +16,6 @@ import SongListFilter from '../components/SongListFilter.component'
 import MusicPlayerView from '../components/MusicPlayerView.component'
 import HeaderView from '../components/HeaderView.component'
 import FeaturedSongList from '../components/FeaturedSongList.component'
-import BirthdayOverlay from '../components/BirthdayOverlay.component';
 
 
 import imageLoader from '../utils/ImageLoader'
@@ -321,7 +320,6 @@ export default function Home() {
           type='image/png'
         /> */}
       </Head>
-      <BirthdayOverlay />
 
       <div
         className="z-[100] bg-gradient-to-b 
