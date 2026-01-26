@@ -10,40 +10,24 @@ EXCEL_PATH = 'Book1.xlsx'
 
 # 你的原始数据 (直接粘贴)
 RAW_DATA = """
-251128 晚台 理歌单
-
+251231 晚台 理歌单
 
 射守矢真兔
-2025年11月29日 02:20
+2026年01月01日 02:50
 三理Mit3uri：网页链接​ 
 直播间：网页链接​
 
-1845 人质
-1850 我不难过
-1856 红颜如霜
-1900 雨爱
-1929 半情歌
-1935 demons
-1938 radioactive
-1946 一格格
-1952 苏州河
-2001 暖暖
-2018 Because of you
-2025 如果可以
-2036 the show
-2044 泪桥
-2048 夏霞
-2101 开始懂了
-2108 水星记
-2123 千千阙歌
-2131 I Love you 3000
-2144 彩色的黑
-2149 九张机
-2152 Sk8er Boi
-2158 爱情讯息
-2208 半岛铁盒
-2433 呼吸决定
-2439 恋人
+2120 I Really Want to Stay At Your House
+2128 住在天狼星的那个人
+2139 别再问我什么是迪斯科
+2157 Super Star
+2217 supernatural
+2254 霓虹甜心
+2304 ditto
+2318 时间煮雨
+2338 处处吻
+2415 世界上的另一个我
+2550 Have a nice day
 """
 
 
@@ -95,11 +79,22 @@ def update_songs():
     if '日期' in df.columns:
         df['日期'] = df['日期'].apply(clean_date_str)
 
-    existing_songs_map = {}
-    for name in df['歌名'].tolist():
-        name = str(name).strip()
-        if name:
-            existing_songs_map[name.lower()] = name
+    # === 构建索引映射 (修改部分) ===
+    existing_songs_map = {}  # 小写歌名 -> 原歌名
+    translated_songs_map = {}  # 小写译名 -> 原歌名 (新增)
+
+    # 遍历每一行，同时建立 歌名 和 译名 的索引
+    for index, row in df.iterrows():
+        # 获取歌名
+        s_name = str(row.get('歌名', '')).strip()
+        if s_name:
+            existing_songs_map[s_name.lower()] = s_name
+
+        # 获取译名 (如果列存在且不为空)
+        t_name = str(row.get('歌名翻译', '')).strip()
+        if t_name:
+            # 关键：如果有译名，建立 "小写译名 -> 原歌名" 的映射
+            translated_songs_map[t_name.lower()] = s_name
 
     lines = RAW_DATA.strip().split('\n')
     stream_date = get_date_from_header(lines)
@@ -127,37 +122,60 @@ def update_songs():
         found = False
         match_info = ""
 
+        # === 匹配逻辑 (修改部分) ===
+
+        # 1. 尝试 歌名 精确匹配 (忽略大小写)
         if raw_song_lower in existing_songs_map:
             target_song_name = existing_songs_map[raw_song_lower]
             found = True
+
+        # 2. [新增] 尝试 译名 精确匹配 (忽略大小写)
+        # 例如：原数据里有 歌名="Unravel" 译名="错乱"，这里输入 "错乱" 也能找到 "Unravel"
+        elif raw_song_lower in translated_songs_map:
+            target_song_name = translated_songs_map[raw_song_lower]
+            found = True
+            match_info = f" (通过译名匹配: {raw_song_text} -> {target_song_name})"
+
+        # 3. 尝试 模糊匹配 (取空格前第一段去匹配歌名)
         else:
             parts = raw_song_text.split(' ')
             if len(parts) > 1:
                 potential_name = parts[0]
                 potential_lower = potential_name.lower()
+
+                # 模糊匹配也先查歌名
                 if potential_lower in existing_songs_map:
                     target_song_name = existing_songs_map[potential_lower]
                     found = True
-                    match_info = f" (模糊匹配: {raw_song_text})"
+                    match_info = f" (模糊匹配歌名: {raw_song_text})"
+                # 再查译名 (可选，为了更强力也可以加上)
+                elif potential_lower in translated_songs_map:
+                    target_song_name = translated_songs_map[potential_lower]
+                    found = True
+                    match_info = f" (模糊匹配译名: {raw_song_text} -> {target_song_name})"
 
         if found:
             # === 老歌更新 ===
             mask = df['歌名'] == target_song_name
-            idx = df[mask].index[0]
+            # 安全检查：确保能找到行
+            if mask.any():
+                idx = df[mask].index[0]
 
-            current_date = clean_date_str(df.at[idx, '日期'])
-            if stream_date not in current_date:
-                new_date = f"{current_date}，{stream_date}" if current_date else stream_date
-                df.at[idx, '日期'] = new_date.strip('，')
+                current_date = clean_date_str(df.at[idx, '日期'])
+                if stream_date not in current_date:
+                    new_date = f"{current_date}，{stream_date}" if current_date else stream_date
+                    df.at[idx, '日期'] = new_date.strip('，')
 
-            try:
-                count = int(float(df.at[idx, '次数'])) if df.at[idx, '次数'] else 0
-                df.at[idx, '次数'] = str(count + 1)
-            except ValueError:
-                df.at[idx, '次数'] = '1'
+                try:
+                    count = int(float(df.at[idx, '次数'])) if df.at[idx, '次数'] else 0
+                    df.at[idx, '次数'] = str(count + 1)
+                except ValueError:
+                    df.at[idx, '次数'] = '1'
 
-            updated_songs_count += 1
-            print(f"[更新] {target_song_name}{match_info}")
+                updated_songs_count += 1
+                print(f"[更新] {target_song_name}{match_info}")
+            else:
+                print(f"⚠️ 警告: 逻辑判定找到了 {target_song_name} 但 DataFrame 中未定位到，请检查数据完整性。")
 
         else:
             # === 新歌追加 ===
@@ -173,6 +191,7 @@ def update_songs():
                 '歌切': ''
             }
             df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+            # 添加到缓存，防止同一次直播里重复添加
             existing_songs_map[raw_song_text.lower()] = raw_song_text
             new_songs_count += 1
             print(f"[新增] {raw_song_text}")
@@ -187,12 +206,12 @@ def update_songs():
     except PermissionError:
         print(f"❌ 保存 CSV 失败: 文件可能被打开")
 
-    # 2. 导出 Excel
-    try:
-        df.to_excel(EXCEL_PATH, index=False, engine='openpyxl')
-        print(f"✅ Excel 已生成: {EXCEL_PATH}")
-    except PermissionError:
-        print(f"⚠️ 警告: Excel 文件被占用，无法自动导出。但不影响 CSV 保存。")
+    # # 2. 导出 Excel
+    # try:
+    #     df.to_excel(EXCEL_PATH, index=False, engine='openpyxl')
+    #     print(f"✅ Excel 已生成: {EXCEL_PATH}")
+    # except PermissionError:
+    #     print(f"⚠️ 警告: Excel 文件被占用，无法自动导出。但不影响 CSV 保存。")
 
 
 if __name__ == "__main__":
