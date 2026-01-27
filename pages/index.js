@@ -520,6 +520,8 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
         return b_date[b_date.length - 1] - a_date[a_date.length - 1];
       } else if (filter_state.sorting_method === 'frequently') {
         return b.song_count - a.song_count;
+      }else if (filter_state.sorting_method === 'alphabetical') {
+        return a.song_name.localeCompare(b.song_name, 'zh-CN');
       } else if (filter_state.is_local) {
         let a_time = favorite_date(a.song_name);
         let b_time = favorite_date(b.song_name);

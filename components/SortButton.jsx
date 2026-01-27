@@ -23,6 +23,7 @@ export default function SortBtn({ props: [
     'infrequently': '唱得比较少？',
     'recently': '最近有唱过？',
     'frequently': '唱得比较多？',
+    'alphabetical': '按歌名排序？',
   };
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
