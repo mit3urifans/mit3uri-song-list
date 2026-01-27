@@ -104,7 +104,7 @@ const PillList = ({ props: [song_info, song_idx, BVID, EffThis,] }) => {
               animate={{ opacity: [0, 1, 1, 1, 0], scale: [0, 1, 1, 1, 1], transform: 'translateY(-15px)' }}
               onAnimationComplete={() => set_show_love(false)}
             >
-              <Image src="/assets/images/emoticon_love.webp" alt="artwork"
+              <Image src="/assets/images/emoticon_surprise.png" alt="artwork"
                 width={0} height={0} sizes="100vw" layout="fill" unoptimized
               />
             </motion.div>
@@ -219,7 +219,7 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
                 animate={{ opacity: [0, 1, 1, 1, 0], scale: [0, 1, 1, 1, 1], transform: 'translateY(-15px)' }}
                 onAnimationComplete={() => setShowLove(false)}
               >
-                <Image src="/assets/images/emoticon_love.webp" alt="artwork"
+                <Image src="/assets/images/emoticon_surprise.png" alt="artwork"
                   width={0} height={0} sizes="100vw" layout="fill" unoptimized
                 />
               </motion.div>

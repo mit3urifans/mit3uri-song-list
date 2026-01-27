@@ -45,6 +45,7 @@ const HomeList = () => {
                   alt={c.name}
                   width={16}
                   height={16}
+                  objectFit="contain"
                   loader={({ src }) => src}
                   unoptimized
                 />

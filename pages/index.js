@@ -275,11 +275,16 @@ export default function Home() {
       <Head>
         <title>{title}</title>
         <meta
-          name="keywords"
-          content={`B站,bilibili,哔哩哔哩,vtuber,虚拟主播,电台唱见,歌单,${config.Name}`}
+            name="keywords"
+            content={`B站,bilibili,哔哩哔哩,vtuber,虚拟主播,电台唱见,歌单,${config.Name}`}
         />
-        <meta name="description" content={`${config.Name}的歌单`} />
+        <meta name="description" content={`${config.Name}的歌单`}/>
         <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
+        <link
+            rel="preload"
+            href="/assets/images/emoticon_surprise.png"
+            as="image"
+        />
         {/* <link
           rel="preload"
           href="/assets/images/emoticon_love.webp"
@@ -322,11 +327,11 @@ export default function Home() {
       </Head>
 
       <div
-        className="z-[100] bg-gradient-to-b 
+          className="z-[100] bg-gradient-to-b
         from-transparent to-[30rem] w-screen"
       >
 
-        <div className="absolute right-0 top-0 w-full sm:w-[85%] 3xl:w-[75%] 4xl:w-[70%] 5xl:w-[65%]">
+      <div className="absolute right-0 top-0 w-full sm:w-[85%] 3xl:w-[75%] 4xl:w-[70%] 5xl:w-[65%]">
           { !dynamicTheme ?
             <Image
               src={(() => {
