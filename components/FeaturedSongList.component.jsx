@@ -34,13 +34,15 @@ const FeaturedSongItem = (props) => {
   }, [song]);
   const bvid_list = song.BVID.trim().split(/，/g);
 
+  const has_record = song.BVID && song.BVID.trim().length > 0; // 判断是否有歌切逻辑修改，不再使用封面判断而是使用BVID字段
+
   const [show_love, set_show_love] = useState(false);
 
   return (
     <div className="flex flex-row justify-between items-center mb-3 w-[21rem] sm:w-[30rem]">
       <div className="flex flex-row items-center">
         <div className="shrink-0 rounded-lg w-[2.5rem] h-[2.5rem] object-cover relative">
-          <Image src={get_artwork_url(bvid_list)} 
+          <Image src={get_artwork_url(bvid_list)}
             width={0} height={0} layout="fill" objectFit="cover"
             loader={({src}) => src} sizes="100vw"
             className="rounded-lg" alt="artwork" unoptimized
@@ -58,7 +60,7 @@ const FeaturedSongItem = (props) => {
         </div>
       </div>
       <div className="flex flex-row items-start pr-10">
-        <span className={`text-label flex flex-row items-center ${get_artwork_url(bvid_list) !== "/cover.png" ? "inline" : "hidden"}`}>
+        <span className={`text-label flex flex-row items-center ${has_record ? "inline" : "hidden"}`}>
           <span className="text-accent">{bili2_icon()}</span>
           <HiMiniPlay className="mr-1 ml-3" onClick={
             () => {
@@ -87,7 +89,7 @@ const FeaturedSongItem = (props) => {
                   animate={{ opacity: [0, 1, 1, 1, 0], scale: [0, 1, 1, 1, 1] }}
                   onAnimationComplete={() => set_show_love(false)}
                 >
-                  <Image src="/assets/images/emoticon_love.webp" alt="artwork"
+                  <Image src="/assets/images/emoticon_surprise.png" alt="artwork"
                     width={0} height={0} sizes="100vw" layout="fill" unoptimized
                   />
                 </motion.div>
@@ -95,7 +97,7 @@ const FeaturedSongItem = (props) => {
             }
           </span>
         </span>
-        <span className={`flex flex-row ${get_artwork_url(bvid_list) !== "/cover.png" ? "hidden" : "inline"}`}>
+        <span className={`flex flex-row ${has_record ? "hidden" : "inline"}`}>
           <span className={`ml-[0.5rem] h-[1.2rem] inline-flex 
             items-center rounded-full
             px-2 py-1 font-medium mr-2
