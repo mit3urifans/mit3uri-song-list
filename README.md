@@ -264,6 +264,7 @@ This is the list of mit3uri-song-list's significant contributors.
 
 + sui-song-list的所有饼干岁
 + mit3urifans
++ NeverHesit8
 
 ## License
 
