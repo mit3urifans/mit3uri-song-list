@@ -37,12 +37,12 @@ import styled, { css } from "styled-components";
 
 import { song_list } from '../config/song_list'
 
-import headerImage from '../public/assets/images/theme/header_shining.png'
-import headerImageShining from '../public/assets/images/theme/header_shining.png'
-import headerImageShiningFront from '../public/assets/images/theme/header_shining.png'
-import headerImageMeteor from '../public/assets/images/theme/header_meteor.png'
-import headerImageLab from '../public/assets/images/theme/header_lab.png'
-import headerImageCyber from '../public/assets/images/theme/header_dream.png'
+import headerImage from '../public/assets/images/theme/header_shining.webp'
+import headerImageShining from '../public/assets/images/theme/header_shining.webp'
+import headerImageShiningFront from '../public/assets/images/theme/header_shining.webp'
+import headerImageMeteor from '../public/assets/images/theme/header_meteor.webp'
+import headerImageLab from '../public/assets/images/theme/header_lab.webp'
+import headerImageCyber from '../public/assets/images/theme/header_dream.webp'
 
 import {
   BsPalette2
@@ -285,7 +285,7 @@ export default function Home() {
         <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
         <link
             rel="preload"
-            href="/assets/images/emoticon_surprise.png"
+            href="/assets/images/emoticon_surprise.webp"
             as="image"
         />
         {/* <link
@@ -448,7 +448,7 @@ export default function Home() {
               alt=""
               width={32}
               height={32}
-              src="assets/images/github.png"
+              src="assets/images/github.webp"
             />
             {/* <a>{ config.Footer }</a> */}
           </footer>
@@ -608,7 +608,7 @@ function SongListWrapper ({ props: [ List, EffThis ] }) {
      <div className = { styles.songListMarco }>
         <div className='flex flex-row items-center'>
           <div className='w-[2.5rem] h-[2.5rem] relative mr-1 rounded-full overflow-hidden'>
-            <Image src={'/assets/images/emoticon_surprise_low.png'}
+            <Image src={'/assets/images/emoticon_surprise.webp'}
               width={0} height={0} sizes='100vw' layout='fill'
               unoptimized objectFit='cover' alt='surprise'
             />

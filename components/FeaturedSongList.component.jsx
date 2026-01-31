@@ -89,7 +89,7 @@ const FeaturedSongItem = (props) => {
                   animate={{ opacity: [0, 1, 1, 1, 0], scale: [0, 1, 1, 1, 1] }}
                   onAnimationComplete={() => set_show_love(false)}
                 >
-                  <Image src="/assets/images/emoticon_surprise.png" alt="artwork"
+                  <Image src="/assets/images/emoticon_surprise.webp" alt="artwork"
                     width={0} height={0} sizes="100vw" layout="fill" unoptimized
                   />
                 </motion.div>
@@ -166,7 +166,7 @@ const FeaturedSongList = (props) => {
           <div className="flex flex-row items-center mb-2">
             <div className="w-[2.5rem] h-[2.5rem]  relative mr-1 rounded-full overflow-hidden">
               <Image
-                src={"/assets/images/emoticon_glasses_low.png"}
+                src={"/assets/images/emoticon_glasses.webp"}
                 width={0}
                 height={0}
                 sizes="100vw"
