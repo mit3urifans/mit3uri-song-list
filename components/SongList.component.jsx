@@ -255,7 +255,7 @@ export default function SongList
     <table>
       <tbody>
         <tr>
-          <td>歌单里没有诶~隐藏歌单碰碰运气!</td>
+          <td className="text-center py-10 text-lg text-secondary-label">歌单里没有诶~隐藏歌单碰碰运气!</td>
         </tr>
       </tbody>
     </table>
