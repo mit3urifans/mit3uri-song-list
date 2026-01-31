@@ -37,9 +37,12 @@ import styled, { css } from "styled-components";
 
 import { song_list } from '../config/song_list'
 
-import headerImage from '../public/assets/images/theme/header.png'
-import headerImageShining from '../public/assets/images/theme/header.png'
-import headerImageShiningFront from '../public/assets/images/theme/header.png'
+import headerImage from '../public/assets/images/theme/header_shining.png'
+import headerImageShining from '../public/assets/images/theme/header_shining.png'
+import headerImageShiningFront from '../public/assets/images/theme/header_shining.png'
+import headerImageMeteor from '../public/assets/images/theme/header_meteor.png'
+import headerImageLab from '../public/assets/images/theme/header_lab.png'
+import headerImageCyber from '../public/assets/images/theme/header_dream.png'
 
 import {
   BsPalette2
@@ -337,6 +340,9 @@ export default function Home() {
               src={(() => {
                 switch (theme) {
                   case 'shining': return headerImage;
+                  case 'meteor': return headerImageMeteor;
+                  case 'lab': return headerImageLab;
+                  case 'cyber': return headerImageCyber;
                   default: return headerImage;
                 }
               })()}
@@ -381,11 +387,17 @@ export default function Home() {
           }
         </div>
         {
-          themeName === 'shining' &&
+          // themeName === 'shining' &&
           <ActivityImage selectTheme={(themeName) => {
             switch (themeName) {
               case 'shining':
                 return headerImageShiningFront;
+              case 'meteor':
+                return headerImageMeteor;
+              case 'lab':
+                return headerImageLab;
+              case 'cyber':
+                return headerImageCyber;
               default:
                 return headerImageShining;
             }

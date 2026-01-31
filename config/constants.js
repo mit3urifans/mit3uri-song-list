@@ -47,6 +47,18 @@ const config = {
     'shining': {
       name: '星光舞台',
       dynamic: false,
+    },
+    'meteor':{
+      name: '夜空流星',
+      dynamic: false,
+    },
+    'lab': {
+      name: '梦境实验',
+      dynamic: false,
+    },
+    'cyber': {
+      name: '赛博梦核',
+      dynamic: false,
     }
   }
 }

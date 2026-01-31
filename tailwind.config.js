@@ -544,6 +544,141 @@ module.exports = {
         'secondary-background': '#593A51',
         'tertiary-background': '#F9C3FE',
         'main-page-background': '#c6b4f8'
+      },
+
+      // 2. 新增 meteor (夜空流星)
+      meteor: {
+        // --- 核心背景 ---
+        'background': '#282E42',       // [列表底色] 夜空深蓝灰
+        'main-page-background': '#151922', // [网页大背景] 更深的夜空色，增加层次感
+
+        // --- 强调色 (流星/星光) ---
+        'accent': '#FDD835',           // [强调色] 明亮的流星金
+        'accent-fg': '#FFF9C4',        // [强调文字] 极浅的金黄色
+        'accent-bg': '#37405A',        // [强调背景] 比主背景稍亮的蓝灰
+
+        // --- 文字配色 (星光白) ---
+        'label': '#ECEFF1',            // [主要文字] 接近纯白
+        'secondary-label': '#B0BEC5',  // [次要文字] 蓝灰色
+        'tertiary-label': '#78909C',   // [第三级文字] 深蓝灰
+
+        // --- 组件配色 ---
+        'badge-play': '#FDD835',       // 播放按钮：流星金
+        'bilibili': '#40C4FF',         // B站：天际蓝
+        'music-player-bg': '#323A52',  // 播放器：比背景稍亮，浮起感
+        'item-hover': '#3E4662',       // 列表悬停：被星光照亮的感觉
+
+        // --- 社交图标 ---
+        'pome-bg': '#23293B',
+        'pome-fg': '#6B71FF',
+        'weibo-bg': '#23293B',
+        'weibo-fg': '#FF8A80',
+        'bilibili-bg': '#23293B',
+        'bilibili-fg': '#40C4FF',
+        'vr-bg': '#23293B',
+        'vr-fg': '#69F0AE',
+
+        // --- 其他 ---
+        'oen-blue': '#80D8FF',
+        'accent-oen': '#FDD835',
+        'accent-oen-2': '#ECEFF1',
+        'accent-2': '#FFFF00',
+        'accent-3': '#FDD835',
+
+        'background-2': '#323A52',
+        'secondary-background': '#1B2130',
+        'tertiary-background': '#455A64',
+        'placeholder': '#546E7A',
+      },
+
+      // 3. 新增 lab (梦境实验配色)
+      lab: {
+        // --- 核心配色 ---
+        'background': '#FFFFFF',       // [列表底色] 纯白，营造实验室的洁净感
+        'main-page-background': '#DCEAF7', // [网页大背景] 淡蓝色，像梦境的天空
+
+        // --- 强调色 ---
+        'accent': '#F7C8D0',           // [强调色] 肉粉色 (Flesh Pink)
+        'accent-fg': '#D68A96',        // [强调文字] 深一点的肉粉，保证看得清
+        'accent-bg': '#FFF0F3',        // [强调背景] 极淡的粉色
+
+        // --- 文字配色 ---
+        'label': '#5E6C84',            // [主要文字] 深灰蓝
+        'secondary-label': '#8FA0BC',  // [次要文字] 浅灰蓝
+        'tertiary-label': '#C3CFE0',   // [第三级文字]
+
+        // --- 组件配色 ---
+        'badge-play': '#F7C8D0',       // 播放按钮：肉粉色
+        'bilibili': '#89CFF0',         // B站：婴儿蓝
+        'music-player-bg': '#FFFFFF',  // 播放器背景：纯白
+        'item-hover': '#EBF5FF',       // 列表悬停：极淡的蓝色
+
+        // --- 社交图标背景 ---
+        'pome-bg': '#F0F7FF',
+        'pome-fg': '#9DB6E4',
+        'weibo-bg': '#FFF0F3',
+        'weibo-fg': '#F7C8D0',
+        'bilibili-bg': '#E6F4FF',
+        'bilibili-fg': '#89CFF0',
+        'vr-bg': '#F0FFF4',
+        'vr-fg': '#98E6B8',
+
+        // --- 其他装饰色 ---
+        'oen-blue': '#A3D5FF',
+        'accent-oen': '#F7C8D0',
+        'accent-oen-2': '#5E6C84',
+        'accent-2': '#FFF9DB',
+        'accent-3': '#F7C8D0',
+
+        'background-2': '#F4F9FD',
+        'secondary-background': '#E8F1F8',
+        'tertiary-background': '#F7FBFE',
+        'placeholder': '#DAE1E7',
+      },
+
+      // 4. 新增 cyber (赛博梦境)
+      cyber: {
+        // --- 核心背景 ---
+        'background': '#15175c',       // [列表/组件底色] 比主背景稍亮，增加层次
+        'main-page-background': '#0C0D45', // [用户指定] 网页大背景：深蓝紫
+
+        // --- 强调色 (霓虹光效) ---
+        'accent': '#00f3ff',           // [强调色] 赛博霓虹青 (Cyber Cyan)
+        'accent-fg': '#ffffff',        // [强调文字] 黑色 (在亮青色上对比最强)
+        'accent-bg': '#114e86',        // [强调背景] 深青色
+
+        // --- 文字配色 (荧光屏风格) ---
+        'label': '#e0f7fa',            // [主要文字] 极淡的青白
+        'secondary-label': '#7c8fa6',  // [次要文字] 蓝灰
+        'tertiary-label': '#4a5b75',   // [第三级文字]
+
+        // --- 组件配色 ---
+        'badge-play': '#d600ff',       // 播放按钮：霓虹紫 (Neon Purple)
+        'bilibili': '#00f3ff',         // B站：跟随主色调
+        'music-player-bg': '#0f114a',  // 播放器：深沉的底色
+        'item-hover': '#1e217a',       // 列表悬停：高亮蓝
+
+        // --- 社交图标 ---
+        'pome-bg': '#1a0b2e',
+        'pome-fg': '#878cff',
+        'weibo-bg': '#2a0a12',
+        'weibo-fg': '#ff0055',
+        'bilibili-bg': '#051821',
+        'bilibili-fg': '#00f3ff',
+        'vr-bg': '#00261c',
+        'vr-fg': '#00ff9d',
+
+        // --- 其他装饰 ---
+        'oen-blue': '#00f3ff',
+        'accent-oen': '#d600ff',
+        'accent-oen-2': '#e0f7fa',
+        'accent-2': '#ffee00',
+        'accent-3': '#ff0055',
+
+        'background-2': '#15175c',
+        'secondary-background': '#08092e',
+        'tertiary-background': '#23266e',
+        'placeholder': '#353a6e',
       }
     })
   ],
