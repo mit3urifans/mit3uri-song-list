@@ -282,7 +282,7 @@ export default function Home() {
             content={`B站,bilibili,哔哩哔哩,vtuber,虚拟主播,电台唱见,歌单,${config.Name}`}
         />
         <meta name="description" content={`${config.Name}的歌单`}/>
-        <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
+        <link rel="icon" type="image/x-icon" href="/favicon.webp"></link>
         <link
             rel="preload"
             href="/assets/images/emoticon_surprise.webp"

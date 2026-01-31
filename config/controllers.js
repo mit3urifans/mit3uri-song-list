@@ -22,7 +22,7 @@ export const eff_set = (eff_this, key, value) => eff_this[key][1](value);
 export default global_controllers
 
 export const get_artwork_url = (bvid_list) => {
-  let artwork_url = '/cover.png';
+  let artwork_url = '/cover.webp';
   // if (bvid_list !== null && bvid_list.length > 0) {
   //   let latest_bvid = bvid_list[bvid_list.length - 1];
   //   if (latest_bvid.endsWith("，")) {

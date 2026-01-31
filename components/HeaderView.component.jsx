@@ -115,7 +115,7 @@ const HeaderView = ({ props: [EffThis] }) => {
             <BlurFade delay={0.25} inView>
               <div className="mr-2 ml-[1rem] hidden relative sm:w-[9rem] sm:h-[9rem] sm:block">
                 <Image
-                  src="mit3uri.jpg"
+                  src="mit3uri.webp"
                   alt="liver-avatar"
                   loader={({ src }) => src}
                   layout="fill"
@@ -129,7 +129,7 @@ const HeaderView = ({ props: [EffThis] }) => {
               <div className="flex items-center ml-[1rem] mb-2">
                 <div className="mr-2 w-[3.5rem] h-[3.5rem] relative sm:hidden">
                   <Image
-                    src="mit3uri.jpg"
+                    src="mit3uri.webp"
                     alt="liver-avatar"
                     loader={({ src }) => src}
                     layout="fill"

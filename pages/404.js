@@ -7,7 +7,7 @@ export default function Custom404() {
     <div className={styles.outerDiv}>
       <Head>
         <title>404 Not Found</title>
-        <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
+        <link rel="icon" type="image/x-icon" href="/favicon.webp"></link>
       </Head>
       <div>
         <div className={styles.avatar}></div>

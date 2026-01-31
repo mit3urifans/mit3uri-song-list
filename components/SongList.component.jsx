@@ -353,7 +353,7 @@ export default function SongList
         }
         bvid_list = bvid_list_plain.split(/，/g);
       }
-      let artwork_url = '/cover.png';
+      let artwork_url = '/cover.webp';
       if (bvid_list !== null && bvid_list.length > 0) {
         let latest_bvid = bvid_list[bvid_list.length - 1];
         if (latest_bvid.endsWith("，")) {
@@ -408,7 +408,7 @@ export default function SongList
                         unoptimized
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = "/cover.png";
+                          e.target.src = "/cover.webp";
                         }}
                         layout="fill"
                         objectFit="cover"
