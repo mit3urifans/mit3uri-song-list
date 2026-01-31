@@ -283,11 +283,6 @@ export default function Home() {
         />
         <meta name="description" content={`${config.Name}的歌单`}/>
         <link rel="icon" type="image/x-icon" href="/favicon.webp"></link>
-        <link
-            rel="preload"
-            href="/assets/images/emoticon_surprise.webp"
-            as="image"
-        />
         {/* <link
           rel="preload"
           href="/assets/images/emoticon_love.webp"
