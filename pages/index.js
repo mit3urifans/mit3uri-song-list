@@ -467,6 +467,32 @@ import { content_contains } from '../utils/search_engine'
 /** 过滤器控件 */
 const FilteredList = memo(function FilteredList({ props: [ filter_state, searchBox, EffThis ] }) {
 
+  const languageGroups = [
+    {
+      key: 'chinese',
+      labels: ['华语', '粤语'],
+    },
+    {
+      key: 'japanese',
+      labels: ['日语'],
+    },
+    {
+      key: 'english',
+      labels: ['英语'],
+    },
+    {
+      key: 'korean',
+      labels: ['韩语'],
+    },
+  ];
+
+  const getLanguageGroupRank = (lang) => {
+    const idx = languageGroups.findIndex(group =>
+        group.labels.some(label => lang?.includes(label))
+    );
+    return idx === -1 ? languageGroups.length : idx;
+  };
+
   //过滤歌单列表
   const filteredSongList = song_list
     .map((song) => {
@@ -534,6 +560,11 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
         return b.song_count - a.song_count;
       }else if (filter_state.sorting_method === 'alphabetical') {
         return a.song_name.localeCompare(b.song_name, 'zh-CN');
+      }else if (filter_state.sorting_method === 'length') {
+        const langDiff =
+            getLanguageGroupRank(a.language) - getLanguageGroupRank(b.language);
+        if (langDiff !== 0) return langDiff;
+        return a.song_name.length - b.song_name.length;
       } else if (filter_state.is_local) {
         let a_time = favorite_date(a.song_name);
         let b_time = favorite_date(b.song_name);
