@@ -209,6 +209,7 @@ export default function Home() {
     remark: "",
     sorting_method: "default",
     is_local: false,
+    this_day: false,
   });
 
   const [searchBox, setSearchBox] = EffThis.searchBox = useState('');
@@ -242,6 +243,14 @@ export default function Home() {
       ...eff_get(EffThis, 'filter_state'),
       is_local: is_local
     });
+
+    EffThis.toggle_on_this_day = () => {
+      const current_state = eff_get(EffThis, 'filter_state');
+      eff_set(EffThis, 'filter_state', {
+        ...current_state,
+        this_day: !current_state.this_day // 切换布尔值
+      });
+    };
 
     EffThis.do_set_search = (search) => eff_set(EffThis, 'searchBox', search);
 
@@ -486,6 +495,7 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
     },
   ];
 
+
   const getLanguageGroupRank = (lang) => {
     const idx = languageGroups.findIndex(group =>
         group.labels.some(label => lang?.includes(label))
@@ -493,19 +503,36 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
     return idx === -1 ? languageGroups.length : idx;
   };
 
+  const today = new Date();
+  const m = today.getMonth() + 1;
+  const d = today.getDate();
+
+  // 生成两种可能的格式，适配 "yyyy/mm/dd" 或 "yyyy/m/dd"
+  const matchStr1 = `/${m}/${d}`;
+  const matchStr2 = `/${m.toString().padStart(2, '0')}/${d.toString().padStart(2, '0')}`;
+
   //过滤歌单列表
   const filteredSongList = song_list
     .map((song) => {
+      // 1. 处理收藏状态
       if (typeof window !== 'undefined' && is_favorite_song(song.song_name)) {
         song.is_local = true;
       } else {
         song.is_local = false;
       }
-      if (searchBox === "bgs1314baobaomuamualovelove" && song.song_name === "One more time, One more chance") {
-        song.BVID = "BV1eVnueEEoc";
-        song.date_list = "2024-4-23";
-        song.song_count = 1;
+      // 饼干岁彩蛋，理电池无效
+      // if (searchBox === "bgs1314baobaomuamualovelove" && song.song_name === "One more time, One more chance") {
+      //   song.BVID = "BV1eVnueEEoc";
+      //   song.date_list = "2024-4-23";
+      //   song.song_count = 1;
+      // }
+
+      // 2. 预处理那年今日逻辑：判断 date_list 中是否有日期匹配今天
+      let isTodayInHistory = false;
+      if (song.date_list) {
+        isTodayInHistory = song.date_list.includes(matchStr1) || song.date_list.includes(matchStr2);
       }
+      song.is_today = isTodayInHistory;
       return song;
     })
     .filter(
@@ -534,8 +561,12 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
         && (filter_state.paid
             ? song.paid == 1
             : true)
+        //收藏夹
         && (filter_state.is_local
             ? song.is_local
+            : true)
+        && (filter_state.this_day
+            ? song.is_today
             : true))
     .sort((a, b) => {
       if (filter_state.sorting_method === 'not_recently') {

@@ -86,6 +86,12 @@ export default function SongListFilter({ props: [ filter_state, searchBox, EffTh
               EffThis,
             ]}
           />
+          <ThisDayFilterBtn
+              props={[
+                  filter_state.this_day,
+                  EffThis,
+              ]}
+          />
           <RandomFilterBtn />
         </div>
         <div className="relative pl-3">
@@ -184,4 +190,37 @@ function RandomFilterBtn () {
       </button>
     </div>
   );
+}
+
+// function ThisDayFilterBtn (){
+function ThisDayFilterBtn({props: [is_active, EffThis]}) {
+  //那年今日按钮
+  return (
+      <div className={`relative inline-flex justify-center gap-x-1.5
+         rounded-xl text-sm mr-2 mb-2
+         ring-inset shrink-0
+          ${is_active ? 'bg-accent-bg' : 'bg-tertiary-background'}
+          ${is_active ? 'text-accent-fg' : 'text-label'}
+         `}
+      >
+        <button type="button" className="justify-center
+          p-2 py-2 text-sm pr-4 inline-flex items-center"
+            // 保持原有的 aria 属性
+                aria-expanded="true" aria-haspopup="true"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // 调用专门的切换函数
+                  EffThis.toggle_on_this_day();
+                }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="inline h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <span>那年今日</span>
+        </button>
+      </div>
+  );
+
 }
