@@ -542,8 +542,8 @@ module.exports = {
         'background': '#484B54',
         'background-2': '#C4A494',
         'secondary-background': '#593A51',
-        'tertiary-background': '#F9C3FE',
-        'main-page-background': '#c6b4f8'
+        'tertiary-background': '#F9C3FE', //筛选按钮配色
+        'main-page-background': '#c6b4f8' //总底色
       },
 
       // 2. 新增 meteor (夜空流星)
@@ -591,7 +591,7 @@ module.exports = {
         'placeholder': '#546E7A',
       },
 
-      // 3. 新增 lab (梦境实验配色)
+      // 3. 新增 lab (梦境实验)
       lab: {
         // --- 核心配色 ---
         'background': '#FFFFFF',       // [列表底色] 纯白，营造实验室的洁净感
@@ -644,7 +644,7 @@ module.exports = {
 
         // --- 强调色 (霓虹光效) ---
         'accent': '#00f3ff',           // [强调色] 赛博霓虹青 (Cyber Cyan)
-        'accent-fg': '#ffffff',        // [强调文字] 黑色 (在亮青色上对比最强)
+        'accent-fg': '#ffffff',        // [强调文字] 白色
         'accent-bg': '#114e86',        // [强调背景] 深青色
 
         // --- 文字配色 (荧光屏风格) ---
@@ -679,7 +679,96 @@ module.exports = {
         'secondary-background': '#08092e',
         'tertiary-background': '#23266e',
         'placeholder': '#353a6e',
-      }
+      },
+
+      // 5. 新增 camera (时间定格)
+      camera: {
+        // --- 核心背景 (相册与相纸) ---
+        'background': '#FFF9FA',       // [列表底色] 接近纯白
+        'main-page-background': '#FAE7F7', // [用户指定] 网页大背景：淡兰花色，营造柔光滤镜感
+
+        // --- 强调色 (快门与对焦) ---
+        'accent': '#FF80AB',           // [强调色] 甜心粉
+        'accent-fg': '#5D4037',        // [强调文字] 纯白
+        'accent-bg': '#FFEDF4',        // [强调背景] 极淡的粉色高光
+
+        // --- 文字配色 (显影液风格) ---
+        'label': '#5D4037',            // [主要文字] 深棕色，像老照片的成像色，比纯黑柔和
+        'secondary-label': '#8D6E63',  // [次要文字] 浅棕褐
+        'tertiary-label': '#D7CCC8',   // [第三级文字]
+
+        // --- 组件配色 ---
+        'badge-play': '#FF80AB',       // 播放按钮：跟随主强调色
+        'bilibili': '#80D8FF',         // B站：清透的天空蓝
+        'music-player-bg': '#FFF0F5',  // 播放器：薰衣草红晕，微弱的区别于纯白背景
+        'item-hover': '#FCE4EC',       // 列表悬停：淡淡的樱花色，像闪光灯补光
+
+        // --- 社交图标 (镜头滤镜色) ---
+        'pome-bg': '#eaeaff',
+        'pome-fg': '#3b37fd',
+        'weibo-bg': '#FFEBEE',         // 红色滤镜底
+        'weibo-fg': '#EF5350',         // 红色滤镜前景色
+        'bilibili-bg': '#E1F5FE',      // 蓝色滤镜底
+        'bilibili-fg': '#29B6F6',      // 蓝色滤镜前景色
+        'vr-bg': '#E0F2F1',            // 青色滤镜底
+        'vr-fg': '#26A69A',            // 青色滤镜前景色
+
+        // --- 其他装饰 ---
+        'oen-blue': '#82B1FF',         // 辅助蓝
+        'accent-oen': '#FF80AB',
+        'accent-oen-2': '#5D4037',
+        'accent-2': '#F4FF81',         // 柠檬黄，作为点缀
+        'accent-3': '#FF80AB',
+
+        'background-2': '#F8BBD0',     // 较深的粉色，用于分割
+        'secondary-background': '#FFF5F8',
+        'tertiary-background': '#F3E5F5',
+        'placeholder': '#E1BEE7',      // 占位符颜色
+      },
+
+      sakura: {
+        // --- 核心背景 ---
+        'background': '#FFFFFF',       // [列表底色] 纯白，保证阅读清晰
+        'main-page-background': '#f7f1fd', // [网页大背景] 极淡的紫罗兰色，取自光照下的头发
+
+        // --- 强调色 (发饰与瞳孔) ---
+        'accent': '#8E6AD8',
+        'accent-fg': '#6C4DD9',
+        'accent-bg': '#F0E9FF',
+
+        // --- 文字配色 ---
+        'label': '#512DA8',            // [主要文字] 深紫色，代替纯黑，更融合画面
+        'secondary-label': '#6E63A8',  // [次要文字] 蓝紫色
+        'tertiary-label': '#af94e0',   // [第三级文字] 浅紫
+
+        // --- 组件配色 ---
+        'badge-play': '#9575CD',       // 播放按钮：主紫色
+        'bilibili': '#F06292',         // B站
+        'music-player-bg': '#FFF7FF',  // 播放器：透着一点点粉的白
+        'item-hover': '#F3E5F5',       // 列表悬停：淡紫高光
+
+        // --- 社交图标 (花瓣与叶子) ---
+        'pome-bg': '#e8f3ff',
+        'pome-fg': '#4946ff',
+        'weibo-bg': '#DCEDC8',         // 浅绿背景 (叶子)
+        'weibo-fg': '#689F38',         // 深绿图标
+        'bilibili-bg': '#E1F5FE',      // 浅蓝背景 (天空)
+        'bilibili-fg': '#29B6F6',      // 蓝图标
+        'vr-bg': '#F3E5F5',
+        'vr-fg': '#AB47BC',
+
+        // --- 其他 ---
+        'oen-blue': '#7986CB',
+        'accent-oen': '#9575CD',
+        'accent-oen-2': '#512DA8',
+        'accent-2': '#fda0be',         // 樱花粉点缀
+        'accent-3': '#a8da73',         // 嫩叶绿点缀
+
+        'background-2': '#D1C4E9',
+        'secondary-background': '#EDE7F6',
+        'tertiary-background': '#F3E5F5',
+        'placeholder': '#D1C4E9',
+      },
     })
   ],
 }

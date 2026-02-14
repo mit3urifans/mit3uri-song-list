@@ -43,6 +43,9 @@ import headerImageShiningFront from '../public/assets/images/theme/header_shinin
 import headerImageMeteor from '../public/assets/images/theme/header_meteor.webp'
 import headerImageLab from '../public/assets/images/theme/header_lab.webp'
 import headerImageCyber from '../public/assets/images/theme/header_dream.webp'
+import headerImageCamera from '../public/assets/images/theme/header_camera.webp'
+import headerImageSakura from '../public/assets/images/theme/header_sakura.webp'
+
 
 import {
   BsPalette2
@@ -347,6 +350,8 @@ export default function Home() {
                   case 'meteor': return headerImageMeteor;
                   case 'lab': return headerImageLab;
                   case 'cyber': return headerImageCyber;
+                  case 'camera': return headerImageCamera;
+                  case 'sakura': return headerImageSakura;
                   default: return headerImage;
                 }
               })()}
@@ -402,6 +407,10 @@ export default function Home() {
                 return headerImageLab;
               case 'cyber':
                 return headerImageCyber;
+              case 'camera':
+                return headerImageCamera;
+              case 'sakura':
+                return headerImageSakura;
               default:
                 return headerImageShining;
             }

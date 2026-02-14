@@ -59,6 +59,14 @@ const config = {
     'cyber': {
       name: '赛博梦核',
       dynamic: false,
+    },
+    'camera':{
+      name: '时间定格',
+      dynamic: false,
+    },
+    'sakura':{
+      name: '春日物语',
+      dynamic: false,
     }
   }
 }
