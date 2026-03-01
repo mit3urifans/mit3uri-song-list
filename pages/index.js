@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState, useRef, useSyncExternalStore } from 'react'
+﻿import React, { memo, useCallback, useEffect, useState, useRef, useSyncExternalStore } from 'react'
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -213,6 +213,7 @@ export default function Home() {
     sorting_method: "default",
     is_local: false,
     this_day: false,
+    tag: "",
   });
 
   const [searchBox, setSearchBox] = EffThis.searchBox = useState('');
@@ -254,6 +255,11 @@ export default function Home() {
         this_day: !current_state.this_day // 切换布尔值
       });
     };
+
+    EffThis.do_filter_tag = (tag) => eff_set(EffThis, 'filter_state', {
+      ...eff_get(EffThis, 'filter_state'),
+      tag: tag,
+    });
 
     EffThis.do_set_search = (search) => eff_set(EffThis, 'searchBox', search);
 
@@ -511,6 +517,11 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
     );
     return idx === -1 ? languageGroups.length : idx;
   };
+  const splitTagText = (tagText) =>
+      String(tagText || '')
+          .split('，')
+          .map(s => s.trim())
+          .filter(Boolean);
 
   const today = new Date();
   const m = today.getMonth() + 1;
@@ -565,6 +576,10 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
         //类型
         && (filter_state.remark != ""
             ? song.remarks?.toLowerCase().includes(filter_state.remark)
+            : true)
+        //标签
+        && (filter_state.tag !== ""
+            ? splitTagText(song.tag).includes(filter_state.tag)
             : true)
         //付费
         && (filter_state.paid

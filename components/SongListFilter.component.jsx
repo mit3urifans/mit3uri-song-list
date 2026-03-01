@@ -2,13 +2,15 @@ import styles from "../styles/Home.module.css";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
 import MandarinBtn from "../components/MandarinBtn.component";
+import TagBtn from "../components/TagBtn.component";
 import config, { theme } from "../config/constants";
 
 import global_controllers from "../config/controllers";
 
 import { 
   song_list, 
-  available_alphabets
+  available_alphabets,
+  available_tags
 } from "../config/song_list";
 import { Form } from "react-bootstrap";
 import SortBtn from "./SortButton";
@@ -73,6 +75,11 @@ export default function SongListFilter({ props: [ filter_state, searchBox, EffTh
               />
             ))
           }
+            <TagBtn
+                props={[
+                    filter_state, available_tags, EffThis,
+                ]}
+            />
           <SortBtn
             props={[
               filter_state,

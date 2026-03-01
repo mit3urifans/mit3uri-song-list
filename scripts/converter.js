@@ -12,6 +12,12 @@ const cnchar = require('cnchar');
 
 const getPinyinFirstLetter = str => cnchar.spell(str);
 const cnpy1st = getPinyinFirstLetter;
+const splitTags = (raw) => {
+    return String(raw || '')
+        .split(/[，,、/|]+/g)
+        .map((s) => s.trim())
+        .filter(Boolean);
+};
 
 const src = path.resolve(__dirname, './Book1.xlsx')
 const dest = path.resolve(__dirname, '../public/music_list.json')
@@ -26,7 +32,8 @@ const loadSongList = async ({src, dest}) => {
         '备注': 'remarks',
         '语言': 'language',
         '次数': 'song_count',
-        '歌切': 'BVID'
+        '歌切': 'BVID',
+        '标签': 'tag'
     }
 
     const buffer = fs.readFileSync(src)
@@ -81,6 +88,18 @@ const loadSongList = async ({src, dest}) => {
                 row_parsers.sticky_top = row_parsers.paid = { parse: () => 0 }
 
                 row_parsers.url = { parse: () => '' }
+
+                // Normalize "tag" to string[] so one song can have multiple tags.
+                if (row_parsers.tag) {
+                    row_parsers.tag = Object.setPrototypeOf({
+                        post: {
+                            tag: (v) => splitTags(v)
+                        }
+                    }, row_parsers.tag);
+                } else {
+                    // Keep schema stable even if Excel has no "标签" column.
+                    row_parsers.tag = { parse: () => [] };
+                }
             }
 
             return {
