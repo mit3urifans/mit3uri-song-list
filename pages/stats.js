@@ -412,7 +412,15 @@ export default function StatsPage({ songs, availableYears }) {
     }))
 
     const totalPerformances = Object.values(songPerfs).reduce((a, b) => a + b, 0)
-    const totalUniqueSongs = Object.keys(songPerfs).length
+    // Count by array index so same-name songs with different artists are counted separately
+    const totalUniqueSongs = songs.filter(song =>
+      song.dates.some(dateStr => {
+        const [y, mo, d] = dateStr.split('/').map(Number)
+        if (!y || !mo || !d) return false
+        const date = new Date(y, mo - 1, d)
+        return date >= startDate && date <= endDate
+      })
+    ).length
     const uniqueSessions = uniqueDateSet.size
     const sessionCounts = Object.values(dateSongCount)
     const maxInSession = sessionCounts.length ? Math.max(...sessionCounts) : 0
@@ -621,6 +629,26 @@ export default function StatsPage({ songs, availableYears }) {
   )
 }
 
+// ─── CSV parser: handles quoted fields with commas ──────────────────────────
+function parseCSVLine(line) {
+  const fields = []
+  let current = ''
+  let inQuotes = false
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i]
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') { current += '"'; i++ }
+      else inQuotes = !inQuotes
+    } else if (ch === ',' && !inQuotes) {
+      fields.push(current); current = ''
+    } else {
+      current += ch
+    }
+  }
+  fields.push(current)
+  return fields
+}
+
 // ─── Static props: parse CSV at build time ──────────────────────────────────
 export async function getStaticProps() {
   const fs = require('fs')
@@ -637,7 +665,7 @@ export async function getStaticProps() {
     .map(l => l.trim().replace(/\r$/, ''))
     .filter(l => l)
     .map(line => {
-      const f = line.split(',')
+      const f = parseCSVLine(line)
       const song_name = (f[1] || '').trim()
       const artist = (f[3] || '').trim()
       const datesStr = (f[4] || '').trim()
