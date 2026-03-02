@@ -536,6 +536,14 @@ export default function StatsPage({ songs, availableYears }) {
             <SelectPill value={effectiveEndMonth} onChange={setEndMonth}>
               {monthOptions.map(m => <option key={m} value={m}>{m}月</option>)}
             </SelectPill>
+            {!isDefaultPreset && (
+              <button
+                className="text-xs px-3 py-1 rounded-full bg-accent-oen-2/15 text-accent-oen-2 hover:bg-accent-oen-2/25 transition-all"
+                onClick={() => setPreset(2025, 3, 2026, 2)}
+              >
+                重置
+              </button>
+            )}
           </div>
         </motion.div>
 
