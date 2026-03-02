@@ -448,7 +448,7 @@ export default function StatsPage({ songs, availableYears }) {
     { label: '不重复歌曲', value: stats.totalUniqueSongs, unit: '首' },
     { label: '总演唱次数', value: stats.totalPerformances, unit: '次' },
     { label: '统计月份', value: monthsInRange.length, unit: '个月' },
-    { label: '演唱场次', value: stats.uniqueSessions, unit: '场' },
+    { label: '直播天数', value: stats.uniqueSessions, unit: '天' },
     { label: '日均演唱', raw: stats.avgPerSession.toFixed(1), unit: '首' },
     { label: '单日最多', value: stats.maxInSession, unit: '首' },
   ]
