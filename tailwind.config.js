@@ -485,66 +485,41 @@ module.exports = {
       },
 
       shining: {
-        'badge-play': '#9A7773',
-        'bilibili': '#BE9287',
-        'music-player-bg': '#AE3E4C',
-        'item-hover': '#45BEEA',
+        'badge-play': '#C46EA0',
+        'bilibili': '#8B85CC',
+        'music-player-bg': '#9B3070',
+        'item-hover': '#EFE5F8',
 
-        'pome-bg': '#eaeaff',
-        'pome-fg': '#3b37fd',
+        'pome-bg': '#F0E8FF',
+        'pome-fg': '#6B30D0',
 
-        'weibo-bg': '#ffe8ec',
-        'weibo-fg': '#f44152',
+        'weibo-bg': '#FFE8F0',
+        'weibo-fg': '#D0306A',
 
-        'bilibili-bg': '#e3faff',
-        'bilibili-fg': '#37abe9',
+        'bilibili-bg': '#EAE8FF',
+        'bilibili-fg': '#5B58D8',
 
-        'vr-bg': '#e5feee',
-        'vr-fg': '#53e383',
+        'vr-bg': '#F8E8FF',
+        'vr-fg': '#A030C0',
 
-        // // generated from #87EAFF
-        // 'oen-blue': '#87EAFF',
-        // 'oen-color-1': "#e1fdff",
-        // 'oen-color-2': "#ccf8ff",
-        // 'oen-color-3': "#9ceeff",
-        // 'oen-color-4': "#68e4fe",
-        // 'oen-color-5': "#43dbfd",
-        // 'oen-color-6': "#2fd6fd",
-        // 'oen-color-7': "#1dd4fe",
-        // 'oen-color-8': "#00bbe3",
-        // 'oen-color-9': "#00a7cb",
-        // 'oen-color-10': "#0090b3",
+        'normal-label': '#FFFFFF',
 
-        // // generated from #DA5D77
-        // 'oen-red': '#DA5D77',
-        // 'oen-red-2': '#E97365',
-        // 'oen-color-11': "#ffeaf1",
-        // 'oen-color-12': "#fbd6df",
-        // 'oen-color-13': "#efadbb",
-        // 'oen-color-14': "#e38095",
-        // 'oen-color-15': "#da5b75",
-        // 'oen-color-16': "#d44361",
-        // 'oen-color-17': "#d23657",
-        // 'oen-color-18': "#bb2747",
-        // 'oen-color-19': "#a71f3f",
-        // 'oen-color-20': "#941335",
-
-        'label': '#85088C',
-        'secondary-label': '#A40DAE',
-        'tertiary-label': '#BCABAB',
-        'accent': '#E77379',
-        'accent-bg': '#B59EF5',
-        'accent-fg': '#5A1FAF',
-        'accent-oen': '#828C9E',
-        'accent-oen-2': '#DA5D77',
-        'accent-2': '#CAFD9A',
-        'accent-3': '#CAFD9A',
-        'placeholder': '#C4A0B8',
-        'background': '#484B54',
-        'background-2': '#C4A494',
-        'secondary-background': '#593A51',
-        'tertiary-background': '#F9C3FE', //筛选按钮配色
-        'main-page-background': '#c6b4f8' //总底色
+        'label': '#3B1568',           // 深靛紫，浅底可读
+        'secondary-label': '#7A4AAE', // 中紫
+        'tertiary-label': '#C4A0D8',  // 淡薰衣草粉
+        'accent': '#C850A0',          // 鲜粉紫（主强调色）
+        'accent-bg': '#F8E8F8',       // 极浅粉紫（按钮/标签底色）
+        'accent-fg': '#9820A0',       // 深洋红，在浅底清晰可读
+        'accent-oen': '#C080C8',      // 柔兰花紫
+        'accent-oen-2': '#C8304A',    // 玫瑰红（图表3/6用色）
+        'accent-2': '#F5EEFF',        // 近白淡紫
+        'accent-3': '#E06090',        // 粉红（书签/高亮）
+        'placeholder': '#C8B0D0',     // 柔薰衣草粉（进度条底色）
+        'background': '#BCA8D8',      // 中淡紫（列表底色）
+        'background-2': '#D0C0EC',    // 浅紫（次级底色）
+        'secondary-background': '#FAF5FF', // 珍珠紫白（卡片底色，关键修复）
+        'tertiary-background': '#F3DFF0',  // 柔粉紫（筛选按钮配色）
+        'main-page-background': '#C8B4F0'  // 薰衣草（总底色，接近原色）
       },
 
       // 2. 新增 meteor (夜空流星)
