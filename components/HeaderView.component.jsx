@@ -146,7 +146,7 @@ const HeaderView = ({ props: [EffThis] }) => {
                     </BlurFade>
                   </span>
                   <BlurFade className="relative z-[10]" delay={0.05} inView>
-                    <div className="flex flex-row items-center space-x-3">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                       <span className="sm:text-subtitle">
                         已收录的歌曲{" "}
                         <button onClick={handleClick}>
@@ -169,72 +169,74 @@ const HeaderView = ({ props: [EffThis] }) => {
                         <HiMiniPlusCircle className="text-xs inline text-accent-fg" />
                         <span className="text-xs text-accent-fg">添加歌曲</span>
                       </button>
-                      <Link
-                        href="/stats"
-                        className="bg-accent-bg h-[1.5rem] rounded-full right-0 hidden sm:flex
-                        items-center justify-center flex-row space-x-1 px-2"
-                      >
-                        <BsBarChartFill className="text-xs inline text-accent-fg" />
-                        <span className="text-xs text-accent-fg">数据统计</span>
-                      </Link>
-                      <button
-                        className="relative bg-accent-bg h-[1.5rem] rounded-full right-0
-                        flex items-center justify-center flex-row space-x-1 px-2"
-                        onClick={() => {
-                          setIsThemeSelectionOpen(!isThemeSelectionOpen);
-                        }}
-                      >
-                        <BsPalette2 className="text-xs inline text-accent-fg" />
-                        <span className="text-xs text-accent-fg ">
-                          切换主题
-                        </span>
-                        {isThemeSelectionOpen ? (
-                          <motion.div
-                            className="origin-top-right absolute right-0 mt-2 w-30 
-                            rounded-md top-[1.2rem]
-                            focus:outline-none z-[100] overflow-y-auto"
-                            aria-orientation="vertical"
-                            aria-labelledby="menu-button"
-                            tabIndex="-1"
-                            ref={dropdownRef}
-                            initial={{
-                              opacity: 0,
-                              scale: 0,
-                              transform: "translateY(15px)",
-                            }}
-                            animate={{
-                              opacity: [0, 1],
-                              scale: [0, 0.5, 1],
-                              transform: "translateY(0px)",
-                            }}
-                          >
-                            <div
-                              className="flex-col flex items-start space-y-1"
-                              role="none"
+                      <div className="flex flex-row space-x-2">
+                        <Link
+                          href="/stats"
+                          className="bg-accent-bg h-[1.5rem] rounded-full right-0 flex
+                          items-center justify-center flex-row space-x-1 px-2"
+                        >
+                          <BsBarChartFill className="text-xs inline text-accent-fg" />
+                          <span className="text-xs text-accent-fg">数据统计</span>
+                        </Link>
+                        <button
+                          className="relative bg-accent-bg h-[1.5rem] rounded-full right-0
+                          flex items-center justify-center flex-row space-x-1 px-2"
+                          onClick={() => {
+                            setIsThemeSelectionOpen(!isThemeSelectionOpen);
+                          }}
+                        >
+                          <BsPalette2 className="text-xs inline text-accent-fg" />
+                          <span className="text-xs text-accent-fg ">
+                            切换主题
+                          </span>
+                          {isThemeSelectionOpen ? (
+                            <motion.div
+                              className="origin-top-right absolute right-0 mt-2 w-30
+                              rounded-md top-[1.2rem]
+                              focus:outline-none z-[100] overflow-y-auto"
+                              aria-orientation="vertical"
+                              aria-labelledby="menu-button"
+                              tabIndex="-1"
+                              ref={dropdownRef}
+                              initial={{
+                                opacity: 0,
+                                scale: 0,
+                                transform: "translateY(15px)",
+                              }}
+                              animate={{
+                                opacity: [0, 1],
+                                scale: [0, 0.5, 1],
+                                transform: "translateY(0px)",
+                              }}
                             >
-                              {[...theme_name_map].map(([theme, value]) => {
-                                return (
-                                  <div
-                                    onClick={() => {
-                                      setIsThemeSelectionOpen(false);
-                                      EffThis.set_theme(theme);
-                                    }}
-                                    className="items-center px-3 space-x-1 py-2 text-sm text-label flex flex-row
-                                  bg-accent-bg rounded-full w-[9rem] overflow-clip"
-                                    role="menuitem"
-                                    tabIndex="-1"
-                                    id="menu-item-3"
-                                    key={value.name}
-                                  >
-                                    <RiPaletteFill className="inline" />
-                                    <span>{value.name}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </motion.div>
-                        ) : null}
-                      </button>
+                              <div
+                                className="flex-col flex items-start space-y-1"
+                                role="none"
+                              >
+                                {[...theme_name_map].map(([theme, value]) => {
+                                  return (
+                                    <div
+                                      onClick={() => {
+                                        setIsThemeSelectionOpen(false);
+                                        EffThis.set_theme(theme);
+                                      }}
+                                      className="items-center px-3 space-x-1 py-2 text-sm text-label flex flex-row
+                                    bg-accent-bg rounded-full w-[9rem] overflow-clip"
+                                      role="menuitem"
+                                      tabIndex="-1"
+                                      id="menu-item-3"
+                                      key={value.name}
+                                    >
+                                      <RiPaletteFill className="inline" />
+                                      <span>{value.name}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </motion.div>
+                          ) : null}
+                        </button>
+                      </div>
                     </div>
                   </BlurFade>
                 </div>
