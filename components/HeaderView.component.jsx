@@ -6,8 +6,9 @@ import NumberTicker from "../components/NumberTicker.component";
 import BlurFade from "./ui/blur-fade";
 import confetti from "canvas-confetti";
 
+import Link from "next/link";
 import { HiMiniPlusCircle } from "react-icons/hi2";
-import { BsPalette2 } from "react-icons/bs";
+import { BsPalette2, BsBarChartFill } from "react-icons/bs";
 import { RiPaletteFill } from "react-icons/ri";
 
 import { motion } from "framer-motion";
@@ -168,6 +169,14 @@ const HeaderView = ({ props: [EffThis] }) => {
                         <HiMiniPlusCircle className="text-xs inline text-accent-fg" />
                         <span className="text-xs text-accent-fg">添加歌曲</span>
                       </button>
+                      <Link
+                        href="/stats"
+                        className="bg-accent-bg h-[1.5rem] rounded-full right-0 hidden sm:flex
+                        items-center justify-center flex-row space-x-1 px-2"
+                      >
+                        <BsBarChartFill className="text-xs inline text-accent-fg" />
+                        <span className="text-xs text-accent-fg">数据统计</span>
+                      </Link>
                       <button
                         className="relative bg-accent-bg h-[1.5rem] rounded-full right-0
                         flex items-center justify-center flex-row space-x-1 px-2"

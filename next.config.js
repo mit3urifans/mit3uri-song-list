@@ -4,7 +4,8 @@ module.exports = {
   exportPathMap: function () {
     return {
       '/': {page: "/"},
-      '/404': {page: "/404"}
+      '/404': {page: "/404"},
+      '/stats': {page: "/stats"}
     }
   },
   images: {
