@@ -301,41 +301,116 @@
 
 .biliPlayerDiv {
   width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.35));
+  backdrop-filter: blur(10px);
+  padding: 0.8rem;
 }
 
 .biliPlayerDiv iframe {
   height: 100%;
-  min-height: 75vh;
+  min-height: 72vh;
+  border: none;
+  border-radius: 0.9rem;
 }
 
 .bvid_bar {
-  border: 2px dotted #AFAFAF;
-  padding: .4rem 0;
-  height: 5.2rem;
-  overflow-y: scroll;
-  scroll-behavior: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.2rem 0;
+  max-height: 7.2rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .bvid_bar__item {
-  display: block;
-  padding: .15rem 1.5rem;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.92rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  background: rgba(255, 255, 255, 0.75);
+  color: #0f172a;
+  transition: all 0.2s ease;
 }
 
 .bvid_bar__item:hover {
-  border-radius: .8rem;
-  background: #00AEEC;
-  color: rgba(255, 255, 255, 0.7);
+  background: #00aeec;
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .bvid_bar__item__inactive {
-  color: #00AEEC;
+  background: #00aeec;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 174, 236, 0.32);
 }
 
 .bvid_bar__item__inactive:hover {
-  background: #AFAFAF;
+  background: #0299cf;
+}
+
+.biliModalHeader {
+  border-bottom: 0;
+  padding-bottom: 0.2rem;
+}
+
+.biliModalTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.biliModalBody {
+  padding-top: 0.2rem;
+}
+
+.bvidBarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.bvidBarTitle {
+  font-size: 0.92rem;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.bvidBarCount {
+  font-size: 0.78rem;
+  color: rgba(15, 23, 42, 0.72);
+}
+
+.biliPlayerFrameWrap {
+  margin-top: 0.6rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.biliPlayerEmpty {
+  min-height: 16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(15, 23, 42, 0.65);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .biliPlayerDiv iframe {
+    min-height: 54vh;
+  }
+  .bvid_bar {
+    max-height: 6rem;
+  }
 }
 
 .outerContainer {
