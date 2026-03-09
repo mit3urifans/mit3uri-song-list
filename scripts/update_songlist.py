@@ -1,37 +1,39 @@
+# TODO：歌名后添加BV号自动化添加歌切
 import pandas as pd
 import re
 import os
 
-# ================= 配置区域 =================
-# CSV 文件路径 (你的主要数据源)
 CSV_PATH = 'music_data.csv'
-# Excel 文件路径 (自动导出给网站用)
-EXCEL_PATH = 'Book1.xlsx'
-
-# 你的原始数据 (直接粘贴)
+# 把下面的歌单替换成当日歌单，可以用译名，但必须匹配（不能有错别字/缩写）
 RAW_DATA = """
-251231 晚台 理歌单
+260309 晚台 理歌单
 
-射守矢真兔
-2026年01月01日 02:50
-三理Mit3uri：网页链接​ 
-直播间：网页链接​
-
-2120 I Really Want to Stay At Your House
-2128 住在天狼星的那个人
-2139 别再问我什么是迪斯科
-2157 Super Star
-2217 supernatural
-2254 霓虹甜心
-2304 ditto
-2318 时间煮雨
-2338 处处吻
-2415 世界上的另一个我
-2550 Have a nice day
+1111 莫名其妙爱上你
+1111 LOVE 2000
+1111 匿名的好友
+1111 나는 아픈 건 딱 질색이니까
+1111 素颜
+1111 多幸运
+1111 舞女
+1111 至少还有你
+1111 住在天狼星的那个人
+1111 想你时风起
+1111 不药而愈
+1111 刻在我心底的名字
+1111 爱如潮水
+1111 小半
+1111 倒带
+1111 最后一页
+1111 一格格
+1111 hurt
+1111 说谎
+1111 心愿便利贴
+1111 If I Die Young
+1111 欧若拉
+1111 鱼仔
 """
 
 
-# ===========================================
 
 def get_date_from_header(lines):
     for line in lines:
@@ -107,6 +109,9 @@ def update_songs():
     new_songs_count = 0
     updated_songs_count = 0
 
+    # 记录本次新增 / 更新过的歌曲
+    touched_songs = set()
+
     for line in lines:
         line = line.strip()
         if not line: continue
@@ -162,9 +167,8 @@ def update_songs():
                 idx = df[mask].index[0]
 
                 current_date = clean_date_str(df.at[idx, '日期'])
-                if stream_date not in current_date:
-                    new_date = f"{current_date}，{stream_date}" if current_date else stream_date
-                    df.at[idx, '日期'] = new_date.strip('，')
+                new_date = f"{current_date}，{stream_date}" if current_date else stream_date
+                df.at[idx, '日期'] = new_date.strip('，')
 
                 try:
                     count = int(float(df.at[idx, '次数'])) if df.at[idx, '次数'] else 0
@@ -173,6 +177,7 @@ def update_songs():
                     df.at[idx, '次数'] = '1'
 
                 updated_songs_count += 1
+                touched_songs.add(target_song_name)
                 print(f"[更新] {target_song_name}{match_info}")
             else:
                 print(f"⚠️ 警告: 逻辑判定找到了 {target_song_name} 但 DataFrame 中未定位到，请检查数据完整性。")
@@ -194,6 +199,7 @@ def update_songs():
             # 添加到缓存，防止同一次直播里重复添加
             existing_songs_map[raw_song_text.lower()] = raw_song_text
             new_songs_count += 1
+            touched_songs.add(raw_song_text)
             print(f"[新增] {raw_song_text}")
 
     print("-" * 30)
@@ -212,6 +218,24 @@ def update_songs():
     #     print(f"✅ Excel 已生成: {EXCEL_PATH}")
     # except PermissionError:
     #     print(f"⚠️ 警告: Excel 文件被占用，无法自动导出。但不影响 CSV 保存。")
+
+    if touched_songs and '歌切' in df.columns:
+        touched_df = df[df['歌名'].isin(touched_songs)]
+
+        empty_qiege_df = touched_df[
+            touched_df['歌切'].isna() |
+            (touched_df['歌切'].astype(str).str.strip() == '')
+        ]
+
+        if not empty_qiege_df.empty:
+            print("\n⚠️ 本次处理的歌曲中，以下歌曲【歌切】为空：")
+            print("-" * 30)
+            for _, row in empty_qiege_df.iterrows():
+                song_name = row.get('歌名', '').strip()
+                print(f"- {song_name}")
+            print(f"\n共 {len(empty_qiege_df)} 首（仅限本次变动歌曲）")
+        else:
+            print("\n✅ 本次新增 / 更新的歌曲，【歌切】均已填写")
 
 
 if __name__ == "__main__":
