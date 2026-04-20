@@ -3,125 +3,267 @@ import styles from "../styles/Home.module.css";
 import { eff_set } from "../config/controllers";
 
 export default function BiliPlayerModal(
-  { props: [Title, Visible, List, Selected, AudioOnly, EffThis] }
+    { props: [Title, Visible, List, Selected, AudioOnly, EffThis] }
 ) {
-  if (!Visible) {
-    return null;
-  }
+    if (!Visible) {
+        return null;
+    }
 
-  const bvidUrl = (bvid) => `https://player.bilibili.com/player.html?bvid=${bvid}`;
-  const bvidList = (Array.isArray(List) ? List : [])
-    .map((item) => (typeof item === "string" ? item.trim() : ""))
-    .filter(Boolean);
-  const selectedBvid = Selected || bvidList[0] || "";
+    const bvidUrl = (bvid) => `https://player.bilibili.com/player.html?bvid=${bvid}`;
+    const bvidList = (Array.isArray(List) ? List : [])
+        .map((item) => (typeof item === "string" ? item.trim() : ""))
+        .filter(Boolean);
+    const selectedBvid = Selected || bvidList[0] || "";
 
-  const restoreVideo = () => eff_set(EffThis, "bili_player_audio_only", false);
-  const hideVideo = () => eff_set(EffThis, "bili_player_audio_only", true);
+    // ==================== 歌单级上一首/下一首（自动跳过无BVID歌曲，保持后台状态）====================
+    const playlist = EffThis?.current_album || [];
+    const currentIndex = playlist.findIndex(song => song.song_name === Title);
 
-  return (
-    <>
-      {!AudioOnly ? (
-        <div
-          className={styles.biliPlayerBackdrop}
-          onClick={EffThis.hide_bili_player}
-        />
-      ) : null}
+    const findNextValidSong = (startIndex) => {
+        for (let i = startIndex + 1; i < playlist.length; i++) {
+            if (playlist[i]?.BVID) return { song: playlist[i], index: i };
+        }
+        return null;
+    };
 
-      <div
-        className={`${styles.biliPlayerFloating} ${
-          AudioOnly ? styles.biliPlayerFloatingHidden : styles.biliPlayerFloatingVisible
-        }`}
-      >
-        <div className={styles.biliPlayerPanel}>
-          <div className={styles.biliPlayerTopbar}>
-            <div className={styles.biliPlayerTitleBlock}>
-              <div className={styles.biliModalTitle}>{Title || "Bilibili Player"}</div>
-              <div className={styles.bvidBarCount}>
-                {bvidList.length ? `${bvidList.length} 条歌切` : "暂时没有可用歌切；；"}
-              </div>
+    const findPrevValidSong = (startIndex) => {
+        for (let i = startIndex - 1; i >= 0; i--) {
+            if (playlist[i]?.BVID) return { song: playlist[i], index: i };
+        }
+        return null;
+    };
+
+    // 核心：后台播放状态下切歌，不强制恢复画面
+    const switchSong = (song) => {
+        if (!song?.BVID || !EffThis) return;
+
+        const list = song.BVID.split(/，/g).map(s => s.trim()).filter(Boolean);
+        const selected = list[0] || '';
+
+        eff_set(EffThis, 'modalPlayerShow', true);
+        eff_set(EffThis, 'modalPlayerSongName', song.song_name);
+        eff_set(EffThis, 'BVID', song.BVID);
+        eff_set(EffThis, 'bvid_list', list);
+        if (selected) {
+            eff_set(EffThis, 'bvid_selected', selected);
+        }
+        // 保持 bili_player_audio_only 不变，后台切歌不弹画面
+    };
+
+    const goToPrevSong = () => {
+        if (currentIndex < 0) return;
+        const prev = findPrevValidSong(currentIndex);
+        if (prev) switchSong(prev.song);
+    };
+
+    const goToNextSong = () => {
+        if (currentIndex < 0) return;
+        const next = findNextValidSong(currentIndex);
+        if (next) switchSong(next.song);
+    };
+
+    const hasPrevSong = findPrevValidSong(currentIndex) !== null;
+    const hasNextSong = findNextValidSong(currentIndex) !== null;
+    // ===========================================================================================
+
+    const restoreVideo = () => eff_set(EffThis, "bili_player_audio_only", false);
+    const hideVideo = () => eff_set(EffThis, "bili_player_audio_only", true);
+
+    return (
+        <>
+            {!AudioOnly ? (
+                <div
+                    className={styles.biliPlayerBackdrop}
+                    onClick={EffThis.hide_bili_player}
+                />
+            ) : null}
+
+            <div
+                className={`${styles.biliPlayerFloating} ${
+                    AudioOnly ? styles.biliPlayerFloatingHidden : styles.biliPlayerFloatingVisible
+                }`}
+            >
+                <div className={styles.biliPlayerPanel}>
+                    <div className={styles.biliPlayerTopbar}>
+                        <div className={styles.biliPlayerTitleBlock}>
+                            <div className={styles.biliModalTitle}>{Title || "Bilibili Player"}</div>
+
+                            {playlist.length > 0 && currentIndex >= 0 && (
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
+                                    <button
+                                        type="button"
+                                        onClick={goToPrevSong}
+                                        disabled={!hasPrevSong}
+                                        style={{
+                                            fontSize: "11px",
+                                            padding: "2px 3px",
+                                            border: "1px solid #ccc",
+                                            borderRadius: "4px",
+                                            background: "transparent",
+                                            cursor: hasPrevSong ? "pointer" : "not-allowed",
+                                            opacity: hasPrevSong ? 1 : 0.4,
+                                        }}
+                                    >
+                                        ◀ 上一首
+                                    </button>
+                                    <span style={{ fontSize: "12px", color: "#666", whiteSpace: "nowrap" }}>
+                    {currentIndex + 1} / {playlist.length}
+                  </span>
+                                    <button
+                                        type="button"
+                                        onClick={goToNextSong}
+                                        disabled={!hasNextSong}
+                                        style={{
+                                            fontSize: "11px",
+                                            padding: "2px 3px",
+                                            border: "1px solid #ccc",
+                                            borderRadius: "4px",
+                                            background: "transparent",
+                                            cursor: hasNextSong ? "pointer" : "not-allowed",
+                                            opacity: hasNextSong ? 1 : 0.4,
+                                        }}
+                                    >
+                                        下一首 ▶
+                                    </button>
+                                </div>
+                            )}
+
+                            <div className={styles.bvidBarCount}>
+                                {bvidList.length ? `${bvidList.length} 条歌切` : "暂时没有可用歌切；；"}
+                            </div>
+                        </div>
+                        <div className={styles.biliPlayerActions}>
+                            <button
+                                type="button"
+                                className={styles.biliPlayerActionButton}
+                                onClick={hideVideo}
+                                disabled={!selectedBvid}
+                            >
+                                后台播放
+                            </button>
+                            <button
+                                type="button"
+                                className={styles.biliPlayerCloseButton}
+                                onClick={EffThis.hide_bili_player}
+                            >
+                                关闭
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className={styles.bvid_bar}>
+                        {bvidList.map((bvid, idx) => (
+                            <button
+                                type="button"
+                                className={
+                                    selectedBvid === bvid
+                                        ? `${styles.bvid_bar__item} ${styles.bvid_bar__item__inactive}`
+                                        : styles.bvid_bar__item
+                                }
+                                onClick={() => eff_set(EffThis, "bvid_selected", bvid)}
+                                key={`${bvid}-${idx}`}
+                            >
+                                {bvid}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className={styles.biliPlayerFrameWrap}>
+                        {selectedBvid ? (
+                            <iframe
+                                src={bvidUrl(selectedBvid)}
+                                width="100%"
+                                height="100%"
+                                frameBorder="0"
+                                allow="autoplay; fullscreen"
+                                allowFullScreen
+                                title={`Bilibili Player - ${selectedBvid}`}
+                            />
+                        ) : (
+                            <div className={styles.biliPlayerEmpty}>
+                                No playable video
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
-            <div className={styles.biliPlayerActions}>
-              <button
-                type="button"
-                className={styles.biliPlayerActionButton}
-                onClick={hideVideo}
-                disabled={!selectedBvid}
-              >
-                后台播放
-              </button>
-              <button
-                type="button"
-                className={styles.biliPlayerCloseButton}
-                onClick={EffThis.hide_bili_player}
-              >
-                关闭
-              </button>
-            </div>
-          </div>
 
-          <div className={styles.bvid_bar}>
-            {bvidList.map((bvid, idx) => (
-              <button
-                type="button"
-                className={
-                  selectedBvid === bvid
-                    ? `${styles.bvid_bar__item} ${styles.bvid_bar__item__inactive}`
-                    : styles.bvid_bar__item
-                }
-                onClick={() => eff_set(EffThis, "bvid_selected", bvid)}
-                key={`${bvid}-${idx}`}
-              >
-                {bvid}
-              </button>
-            ))}
-          </div>
+            {AudioOnly ? (
+                <div
+                    className={styles.biliPlayerMiniDock}
+                    style={{ minWidth: "370px" }}
+                >
+                    <div className={styles.biliPlayerMiniText} style={{ overflow: "hidden" }}>
+                        <div
+                            className={styles.biliPlayerMiniTitle}
+                            style={{
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            {Title || "Bilibili Player"}
+                        </div>
+                    </div>
 
-          <div className={styles.biliPlayerFrameWrap}>
-            {selectedBvid ? (
-              <iframe
-                  src={bvidUrl(selectedBvid)}
-                  width="100%"
-                  height="100%"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen"
-                  allowFullScreen
-                title={`Bilibili Player - ${selectedBvid}`}
-              />
-            ) : (
-              <div className={styles.biliPlayerEmpty}>
-                No playable video
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+                    {playlist.length > 0 && currentIndex >= 0 && (
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginRight: "8px", flexShrink: 0 }}>
+                            <button
+                                type="button"
+                                onClick={goToPrevSong}
+                                disabled={!hasPrevSong}
+                                style={{
+                                    fontSize: "8px",
+                                    padding: "2px 3px",
+                                    border: "1px solid #999",
+                                    borderRadius: "3px",
+                                    background: "transparent",
+                                    color: "#000000",
+                                    opacity: hasPrevSong ? 1 : 0.4,
+                                    cursor: hasPrevSong ? "pointer" : "not-allowed",
+                                }}
+                            >
+                                ◀
+                            </button>
+                            <span style={{ fontSize: "11px", color: "#999", whiteSpace: "nowrap" }}>
+          {currentIndex + 1}/{playlist.length}
+        </span>
+                            <button
+                                type="button"
+                                onClick={goToNextSong}
+                                disabled={!hasNextSong}
+                                style={{
+                                    fontSize: "8px",
+                                    padding: "2px 3px",
+                                    border: "1px solid #999",
+                                    borderRadius: "3px",
+                                    background: "transparent",
+                                    color: "#000000",
+                                    opacity: hasNextSong ? 1 : 0.4,
+                                    cursor: hasNextSong ? "pointer" : "not-allowed",
+                                }}
+                            >
+                                ▶
+                            </button>
+                        </div>
+                    )}
 
-      {AudioOnly ? (
-        <div className={styles.biliPlayerMiniDock}>
-          <div className={styles.biliPlayerMiniText}>
-            <div className={styles.biliPlayerMiniTitle}>
-              {Title || "Bilibili Player"}
-            </div>
-            <div className={styles.biliPlayerMiniSubtitle}>
-              歌切正在后台播放
-            </div>
-          </div>
-          <button
-            type="button"
-            className={styles.biliPlayerMiniButton}
-            onClick={restoreVideo}
-          >
-            返回画面
-          </button>
-          <button
-            type="button"
-            className={styles.biliPlayerMiniClose}
-            onClick={EffThis.hide_bili_player}
-          >
-            关闭
-          </button>
-        </div>
-      ) : null}
-    </>
-  );
+                    <button
+                        type="button"
+                        className={styles.biliPlayerMiniButton}
+                        onClick={restoreVideo}
+                    >
+                        看视频
+                    </button>
+                    <button
+                        type="button"
+                        className={styles.biliPlayerMiniClose}
+                        onClick={EffThis.hide_bili_player}
+                    >
+                        关闭
+                    </button>
+                </div>
+            ) : null}
+        </>
+    );
 }
