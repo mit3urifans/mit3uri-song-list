@@ -39,10 +39,11 @@ export default function TagBtn(
         >
           <button type="button" className="inline-flex items-center
             px-2 py-2 text-sm pr-4" 
+            id="menu-button"
             aria-expanded="true" aria-haspopup="true"
             onClick={(e) => {
               e.stopPropagation();
-              EffThis.do_filter_tag(hasActiveTag ? '' : (tags[0] || ''));
+              setIsOpen((prev) => !prev);
             }}
           >
             {
