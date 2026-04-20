@@ -308,7 +308,8 @@
   padding: 0.8rem;
 }
 
-.biliPlayerDiv iframe {
+.biliPlayerDiv iframe,
+.biliPlayerPanel iframe {
   height: 100%;
   min-height: 72vh;
   border: none;
@@ -388,11 +389,150 @@
   color: rgba(15, 23, 42, 0.72);
 }
 
+.biliPlayerBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(6px);
+}
+
+.biliPlayerFloating {
+  position: fixed;
+  z-index: 1050;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.biliPlayerFloatingVisible {
+  inset: 4vh 4vw auto 4vw;
+}
+
+.biliPlayerFloatingHidden {
+  right: -200px;
+  bottom: -200px;
+  width: 1px;
+  height: 1px;
+  opacity: 0.01;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.biliPlayerPanel {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.24);
+  padding: 0.8rem;
+}
+
+.biliPlayerTopbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.biliPlayerTitleBlock {
+  min-width: 0;
+}
+
+.biliPlayerActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.biliPlayerActionButton,
+.biliPlayerCloseButton,
+.biliPlayerMiniButton,
+.biliPlayerMiniClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.biliPlayerActionButton,
+.biliPlayerMiniButton {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.biliPlayerActionButton:hover:not(:disabled),
+.biliPlayerMiniButton:hover {
+  transform: translateY(-1px);
+  background: #1e293b;
+}
+
+.biliPlayerActionButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.biliPlayerCloseButton,
+.biliPlayerMiniClose {
+  background: rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+}
+
+.biliPlayerCloseButton:hover,
+.biliPlayerMiniClose:hover {
+  background: rgba(15, 23, 42, 0.14);
+}
+
 .biliPlayerFrameWrap {
   margin-top: 0.6rem;
   border-radius: 1rem;
   overflow: hidden;
   background: rgba(15, 23, 42, 0.08);
+  position: relative;
+}
+
+.biliPlayerMiniDock {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1060;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(22rem, calc(100vw - 2rem));
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+.biliPlayerMiniText {
+  min-width: 0;
+  flex: 1;
+}
+
+.biliPlayerMiniTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.biliPlayerMiniSubtitle {
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  color: rgba(15, 23, 42, 0.7);
 }
 
 .biliPlayerEmpty {
@@ -405,11 +545,34 @@
 }
 
 @media (max-width: 768px) {
-  .biliPlayerDiv iframe {
+  .biliPlayerDiv iframe,
+  .biliPlayerPanel iframe {
     min-height: 54vh;
   }
   .bvid_bar {
     max-height: 6rem;
+  }
+  .biliPlayerFloatingVisible {
+    inset: 2vh 2vw auto 2vw;
+  }
+  .biliPlayerPanel {
+    width: 96vw;
+    max-height: 96vh;
+    overflow: auto;
+  }
+  .biliPlayerTopbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .biliPlayerActions {
+    justify-content: flex-end;
+  }
+  .biliPlayerMiniDock {
+    right: 0.75rem;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    width: auto;
+    flex-wrap: wrap;
   }
 }
 

@@ -183,12 +183,7 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
           >
             {bili2_icon()}
           </span>
-          <span onClick={
-            (e) => {
-              e.stopPropagation();
-              EffThis.play_music_at(songIdx);
-            }
-          }>
+          <span className="pointer-events-none">
             <HiMiniPlay className="ml-3 text-label text-[1rem]" />
           </span>
           <span className="inline-flex relative items-center justify-center w-[2rem] h-[2rem]"

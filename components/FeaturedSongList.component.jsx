@@ -62,11 +62,7 @@ const FeaturedSongItem = (props) => {
       <div className="flex flex-row items-start pr-10">
         <span className={`text-label flex flex-row items-center ${has_record ? "inline" : "hidden"}`}>
           <span className="text-accent">{bili2_icon()}</span>
-          <HiMiniPlay className="mr-1 ml-3" onClick={
-            () => {
-              EffThis.play_music_for_name(song.song_name);
-            }
-          }/>
+          <HiMiniPlay className="mr-1 ml-3 pointer-events-none" />
           <span className="relative inline-flex items-center h-[2rem] w-[2rem] justify-center"
             onClick={(e) => {
                 e.stopPropagation();

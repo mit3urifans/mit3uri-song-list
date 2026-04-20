@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       cursor: {
-        'main-cursor': "url('/assets/cursor/v2/pointer.png'), pointer",
+        'main-cursor': "url('/assets/cursor/v2/pointer_new.png'), pointer",
       },
       screens: {
         'xl': '1100px',

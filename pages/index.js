@@ -13,7 +13,6 @@ import Title from '../components/Title.component'
 import SongList from '../components/SongList.component'
 import BiliPlayerModal from '../components/BiliPlayerModal.component'
 import SongListFilter from '../components/SongListFilter.component'
-import MusicPlayerView from '../components/MusicPlayerView.component'
 import HeaderView from '../components/HeaderView.component'
 import FeaturedSongList from '../components/FeaturedSongList.component'
 
@@ -160,8 +159,7 @@ export default function Home() {
   const [ bvid_list              ] = EffThis.bvid_list           = useState([]);
 
   const [ bvid_selected          ] = EffThis.bvid_selected       = useState('');
-
-  const [ currently_playing ] = EffThis.currently_playing = useState(-1);
+  const [ bili_player_audio_only ] = EffThis.bili_player_audio_only = useState(false);
 
   const {theme, setTheme} = useTheme();
 
@@ -176,28 +174,21 @@ export default function Home() {
         eff_set(EffThis, 'modalPlayerShow', true);
         eff_set(EffThis, 'modalPlayerSongName', title);
         eff_set(EffThis,'BVID', bvid);
+        eff_set(EffThis, 'bili_player_audio_only', false);
         const list = bvid.split(/，/g);
         const selected = list[0];
-        if (selected && eff_get(EffThis, 'bvid_selected') !== selected) {
+        eff_set(EffThis, 'bvid_list', list);
+        if (selected) {
           eff_set(EffThis, 'bvid_selected', selected);
-          eff_set(EffThis, 'bvid_list', list);
         }
       } else if (url) {  // netease url
         window.open('https://music.163.com/#/dj?id=' + url)
       }
     };
-    EffThis.hide_bili_player = () => eff_set(EffThis, 'modalPlayerShow', false);
-    
-    EffThis.play_music_at = (idx) => {
-      eff_set(EffThis, 'currently_playing', idx);
-    }
-    EffThis.play_music_for_name = (name) => { 
-      console.error("find name: "+name)
-      const idx = EffThis.current_album.findIndex(song => song.song_name === name);
-      if (idx !== -1) {
-        eff_set(EffThis, 'currently_playing', idx);
-      }
-    }
+    EffThis.hide_bili_player = () => {
+      eff_set(EffThis, 'modalPlayerShow', false);
+      eff_set(EffThis, 'bili_player_audio_only', false);
+    };
     EffThis.set_theme = (theme) => {
       setTheme(theme);
     }
@@ -455,7 +446,6 @@ export default function Home() {
           } title="最近更新"/>
           <SongListFilter props={[filter_state, searchBox, EffThis]} />
           <FilteredList props={[filter_state, searchBox, EffThis]} />
-          {/* <MusicPlayerView props={[currently_playing, EffThis]} /> */}
         </section>
 
         <FixedTool />
@@ -478,6 +468,7 @@ export default function Home() {
             bili_player_visibility,
             bvid_list,
             bvid_selected,
+            bili_player_audio_only,
             EffThis,
           ]}
         />
