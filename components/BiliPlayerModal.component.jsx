@@ -1,10 +1,36 @@
 import styles from "../styles/Home.module.css";
-
+import { useEffect, useRef } from "react";
 import { eff_set } from "../config/controllers";
 
 export default function BiliPlayerModal(
     { props: [Title, Visible, List, Selected, AudioOnly, EffThis] }
 ) {
+
+    const goToNextSongRef = useRef(null);
+    const isSwitchingRef = useRef(false);
+
+    useEffect(() => {
+        const handleEnded = (event) => {
+            console.log("[BiliPlayer] 扩展检测到播放结束:", event.detail);
+
+            if (isSwitchingRef.current) return;
+            isSwitchingRef.current = true;
+
+            goToNextSongRef.current?.();
+
+            setTimeout(() => {
+                isSwitchingRef.current = false;
+            }, 1500);
+        };
+
+        // 监听扩展发送的自定义事件
+        window.addEventListener("bilibiliVideoEnded", handleEnded);
+
+        return () => {
+            window.removeEventListener("bilibiliVideoEnded", handleEnded);
+        };
+    }, []);
+
     if (!Visible) {
         return null;
     }
@@ -15,7 +41,6 @@ export default function BiliPlayerModal(
         .filter(Boolean);
     const selectedBvid = Selected || bvidList[0] || "";
 
-    // ==================== 歌单级上一首/下一首（自动跳过无BVID歌曲，保持后台状态）====================
     const playlist = EffThis?.current_album || [];
     const currentIndex = playlist.findIndex(song => song.song_name === Title);
 
@@ -33,21 +58,15 @@ export default function BiliPlayerModal(
         return null;
     };
 
-    // 核心：后台播放状态下切歌，不强制恢复画面
     const switchSong = (song) => {
         if (!song?.BVID || !EffThis) return;
-
         const list = song.BVID.split(/，/g).map(s => s.trim()).filter(Boolean);
         const selected = list[0] || '';
-
         eff_set(EffThis, 'modalPlayerShow', true);
         eff_set(EffThis, 'modalPlayerSongName', song.song_name);
         eff_set(EffThis, 'BVID', song.BVID);
         eff_set(EffThis, 'bvid_list', list);
-        if (selected) {
-            eff_set(EffThis, 'bvid_selected', selected);
-        }
-        // 保持 bili_player_audio_only 不变，后台切歌不弹画面
+        if (selected) eff_set(EffThis, 'bvid_selected', selected);
     };
 
     const goToPrevSong = () => {
@@ -62,9 +81,10 @@ export default function BiliPlayerModal(
         if (next) switchSong(next.song);
     };
 
+    goToNextSongRef.current = goToNextSong;
+
     const hasPrevSong = findPrevValidSong(currentIndex) !== null;
     const hasNextSong = findNextValidSong(currentIndex) !== null;
-    // ===========================================================================================
 
     const restoreVideo = () => eff_set(EffThis, "bili_player_audio_only", false);
     const hideVideo = () => eff_set(EffThis, "bili_player_audio_only", true);
@@ -107,8 +127,8 @@ export default function BiliPlayerModal(
                                         ◀ 上一首
                                     </button>
                                     <span style={{ fontSize: "12px", color: "#666", whiteSpace: "nowrap" }}>
-                    {currentIndex + 1} / {playlist.length}
-                  </span>
+                                        {currentIndex + 1} / {playlist.length}
+                                    </span>
                                     <button
                                         type="button"
                                         onClick={goToNextSong}
@@ -226,8 +246,8 @@ export default function BiliPlayerModal(
                                 ◀
                             </button>
                             <span style={{ fontSize: "11px", color: "#999", whiteSpace: "nowrap" }}>
-          {currentIndex + 1}/{playlist.length}
-        </span>
+                                {currentIndex + 1}/{playlist.length}
+                            </span>
                             <button
                                 type="button"
                                 onClick={goToNextSong}
