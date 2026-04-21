@@ -45,14 +45,21 @@ export default function BiliPlayerModal(
     const currentIndex = playlist.findIndex(song => song.song_name === Title);
 
     const findNextValidSong = (startIndex) => {
-        for (let i = startIndex + 1; i < playlist.length; i++) {
+        const len = playlist.length;
+        if (len === 0) return null;
+        for (let offset = 1; offset < len; offset++) {
+            const i = (startIndex + offset) % len;  // ← 循环：到末尾后从 0 开始
             if (playlist[i]?.BVID) return { song: playlist[i], index: i };
         }
         return null;
     };
 
     const findPrevValidSong = (startIndex) => {
-        for (let i = startIndex - 1; i >= 0; i--) {
+        const len = playlist.length;
+        if (len === 0) return null;
+        // 从 startIndex-1 开始，循环遍历，跳过 startIndex 本身
+        for (let offset = 1; offset < len; offset++) {
+            const i = (startIndex - offset + len) % len;  // ← 循环：到开头后从末尾继续
             if (playlist[i]?.BVID) return { song: playlist[i], index: i };
         }
         return null;
@@ -83,8 +90,9 @@ export default function BiliPlayerModal(
 
     goToNextSongRef.current = goToNextSong;
 
-    const hasPrevSong = findPrevValidSong(currentIndex) !== null;
-    const hasNextSong = findNextValidSong(currentIndex) !== null;
+    const hasAnyValidSong = playlist.some(song => song?.BVID);
+    const hasPrevSong = currentIndex >= 0 && hasAnyValidSong && playlist.length > 1;
+    const hasNextSong = currentIndex >= 0 && hasAnyValidSong && playlist.length > 1;
 
     const restoreVideo = () => eff_set(EffThis, "bili_player_audio_only", false);
     const hideVideo = () => eff_set(EffThis, "bili_player_audio_only", true);
