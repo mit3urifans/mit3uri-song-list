@@ -680,7 +680,7 @@ function SongListWrapper ({ props: [ List, EffThis ] }) {
      <div className = { styles.songListMarco }>
         <div className='flex flex-row items-center'>
           <div className='w-[2.5rem] h-[2.5rem] relative mr-1 rounded-full overflow-hidden'>
-            <Image src={'/assets/images/emoticon_surprise.webp'}
+            <Image src={'/assets/images/emoticon_oops.webp'}
               width={0} height={0} sizes='100vw' layout='fill'
               unoptimized objectFit='cover' alt='surprise'
             />
