@@ -123,7 +123,8 @@ const PillList = ({ props: [song_info, song_idx, BVID, EffThis,] }) => {
         sm:group-hover/tablename:text-white
         sm:group-hover/tablename:bg-secondary-label
         sm:hover:ring-white
-        transition-colors duration-100"
+        transition-colors duration-100
+        cursor-main-cursor"
         onClick={e => {
           e.stopPropagation();
           sessionStorage.setItem('songListScrollY', String(window.scrollY));
@@ -255,7 +256,7 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
         <div className={`sm:hidden flex flex-row ${hasRecord ? 'hidden' : 'inline'} items-center`}>
           <Link
             href={`/song/${songInfo.index}/`}
-            className="inline-flex relative items-center justify-center w-[2rem] h-[2rem] no-underline"
+            className="inline-flex relative items-center justify-center w-[2rem] h-[2rem] no-underline cursor-main-cursor"
             onClick={e => {
               e.stopPropagation();
               sessionStorage.setItem('songListScrollY', String(window.scrollY));
