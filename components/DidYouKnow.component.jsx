@@ -228,8 +228,8 @@ export default function DidYouKnow() {
   if (!currentFact) return null
 
   return (
-    <div className="max-w-[1100px] mx-auto px-4">
-      <div className="bg-secondary-background/60 backdrop-blur-sm rounded-2xl p-4 mb-2">
+    <div className="px-4">
+      <div className="bg-secondary-background/60 backdrop-blur-sm rounded-2xl p-4 mb-2 max-w-[1100px] mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <HiLightBulb className="text-accent-fg text-subtitle" />

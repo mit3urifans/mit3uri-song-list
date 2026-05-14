@@ -21,8 +21,7 @@ import {
 
 import Link from "next/link";
 
-import { 
-  HiMiniPlay, 
+import {
   HiChevronRight,
   HiChevronLeft
 } from "react-icons/hi2";
@@ -186,100 +185,88 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
 
     const [showLove, setShowLove] = useState(false);
 
+    const bookmarkBtn = (
+      <span className="inline-flex relative items-center justify-center w-[1.8rem] h-[1.8rem]"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggle_favorite_song(songInfo.song_name, isFavorite, () => {
+            setIsFavorite(!isFavorite);
+            if (!isFavorite) {
+              setShowLove(true);
+              navigator.sendBeacon('/api/v2/action', JSON.stringify({
+                action: "bookmark",
+                name: songInfo.song_name,
+                timestamp: Date.now(),
+              }));
+            }
+          });
+        }}
+      >
+        {isFavorite ? (
+          <BsBookmarkHeartFill className="text-oen-red text-sm" />
+        ) : (
+          <BsBookmarkPlus className="text-label text-sm" />
+        )}
+        {showLove ? (
+          <motion.div className="absolute h-[1.8rem] w-[1.8rem] bg-black rounded-full overflow-hidden top-0 right-0 left-0 bottom-0"
+            initial={{ opacity: 0, scale: 0, transform: 'translateY(0px)' }}
+            animate={{ opacity: [0, 1, 1, 1, 0], scale: [0, 1, 1, 1, 1], transform: 'translateY(-12px)' }}
+            onAnimationComplete={() => setShowLove(false)}
+          >
+            <Image src="/assets/images/emoticon_surprise.webp" alt="artwork"
+              width={0} height={0} sizes="100vw" layout="fill" unoptimized
+            />
+          </motion.div>
+        ) : null}
+      </span>
+    );
+
+    const detailLink = (
+      <Link
+        href={`/song/${songInfo.index}/`}
+        className="inline-flex relative items-center justify-center w-[1.8rem] h-[1.8rem] no-underline"
+        onClick={e => {
+          e.stopPropagation();
+          sessionStorage.setItem('songListScrollY', String(window.scrollY));
+        }}
+      >
+        <HiChevronRight className="text-secondary-label text-[1rem]" />
+      </Link>
+    );
+
     return (
       <>
         <div className="shrink-0">
-        <div className={`sm:hidden flex flex-row ${hasRecord ? 'inline' : 'hidden'} items-center mr-[-0.5rem]`}>
+        <div className={`sm:hidden flex flex-row ${hasRecord ? 'inline' : 'hidden'} items-center gap-0`}>
           <span
-            className="text-bilibili text-[1rem]"
-            onClick={
-              (e) => {
-                e.stopPropagation();
-                EffThis.show_bili_player({
-                  title: songInfo.song_name,
-                  bvid: BVID,
-                });
-              }
-            }
+            className="text-bilibili text-[0.9rem]"
+            onClick={e => {
+              e.stopPropagation();
+              EffThis.show_bili_player({ title: songInfo.song_name, bvid: BVID });
+            }}
           >
             {bili2_icon()}
           </span>
-          <span className="pointer-events-none">
-            <HiMiniPlay className="ml-3 text-label text-[1rem]" />
-          </span>
-          <Link
-            href={`/song/${songInfo.index}/`}
-            className="inline-flex relative items-center justify-center w-[2rem] h-[2rem] no-underline"
-            onClick={e => {
-              e.stopPropagation();
-              sessionStorage.setItem('songListScrollY', String(window.scrollY));
-            }}
-          >
-            <HiChevronRight className="text-secondary-label text-[1.1rem]" />
-          </Link>
-          <span className="inline-flex relative items-center justify-center w-[2rem] h-[2rem]"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggle_favorite_song(songInfo.song_name, isFavorite, () => {
-                setIsFavorite(!isFavorite);
-                if (!isFavorite) {
-                  setShowLove(true);
-                  navigator.sendBeacon('/api/v2/action', JSON.stringify({
-                    action: "bookmark",
-                    name: songInfo.song_name,
-                    timestamp: Date.now(),
-                  }));
-                }
-              });
-            }}
-          >
-            {isFavorite ? (
-              <BsBookmarkHeartFill className="text-oen-red text-[1rem]" />
-            ) : (
-              <BsBookmarkPlus className="text-label text-[1rem]" />
-            )}
-            {
-              showLove ?
-              <motion.div className="absolute h-[2rem] w-[2rem] bg-black rounded-full overflow-hidden top-0 right-0 left-0 bottom-0"
-                initial={{ opacity: 0, scale: 0, transform: 'translateY(0px)' }}
-                animate={{ opacity: [0, 1, 1, 1, 0], scale: [0, 1, 1, 1, 1], transform: 'translateY(-15px)' }}
-                onAnimationComplete={() => setShowLove(false)}
-              >
-                <Image src="/assets/images/emoticon_surprise.webp" alt="artwork"
-                  width={0} height={0} sizes="100vw" layout="fill" unoptimized
-                />
-              </motion.div>
-              : null
-            }
-          </span>
+          {detailLink}
+          {bookmarkBtn}
         </div>
-        <div className={`sm:hidden flex flex-row ${hasRecord ? 'hidden' : 'inline'} items-center`}>
-          <Link
-            href={`/song/${songInfo.index}/`}
-            className="inline-flex relative items-center justify-center w-[2rem] h-[2rem] no-underline cursor-main-cursor"
-            onClick={e => {
-              e.stopPropagation();
-              sessionStorage.setItem('songListScrollY', String(window.scrollY));
-            }}
-          >
-            <HiChevronRight className="text-secondary-label text-[1.1rem]" />
-          </Link>
-          <button className={`ml-[0.5rem] h-[1.2rem] inline-flex
+        <div className={`sm:hidden flex flex-row ${hasRecord ? 'hidden' : 'inline'} items-center gap-0`}>
+          <button className={`h-[1.2rem] inline-flex
             items-center rounded-full
             px-2 py-1 font-medium
           text-secondary-label ring-1 ring-inset
           ring-secondary-label text-xs shrink-0
             transition-colors duration-100
             hover:ring-white hover:text-white hover:bg-secondary-label`}
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               alert("暂时没有歌切记录；；");
             }}
-            >
-            <div className="inline">
-              无记录
-            </div>
+          >
+            <span>无记录</span>
           </button>
+          {detailLink}
+          {bookmarkBtn}
         </div>
         </div>
       </>
@@ -437,7 +424,7 @@ export default function SongList
                 }}
               >
                 <div className="flex flex-row items-center justify-between">
-                  <div className="flex flex-row items-center h-[4.5rem]">
+                  <div className="flex flex-row items-center h-[4.5rem] min-w-0">
                     <div className="inline shrink-0 sm:ml-3 sm:w-[3.5rem] sm:h-[3.5rem] w-[3rem] h-[3rem] relative">
                       <Image
                         src={artwork_url}
@@ -456,7 +443,7 @@ export default function SongList
                         loader={({ src }) => src}
                       />
                     </div>
-                    <div className="flex flex-col w-full">
+                    <div className="flex flex-col w-full min-w-0">
                       <div
                         className="song-table-song-name 
                           group/songname items-center flex pl-[0.8rem] 
@@ -529,7 +516,7 @@ export default function SongList
                       </div>
                     </div>
                   </div>
-                  <div>
+                  <div className="shrink-0">
                     <CompactButtonList
                       className="sm:hidden"
                       props={[songInfo, songIdx, out.BVID, EffThis]}
