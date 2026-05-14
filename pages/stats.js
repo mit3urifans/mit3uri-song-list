@@ -366,6 +366,7 @@ export default function StatsPage({ songs, availableYears }) {
     songs.forEach(song => {
       nameArtistMap[song.song_name] = song.artist
       const langs = (song.language || '').split('，').map(s => s.trim()).filter(Boolean)
+      const artists = (song.artist || '').split('/').map(a => a.trim()).filter(Boolean)
 
       song.dates.forEach(dateStr => {
         const [y, mo, d] = dateStr.split('/').map(Number)
@@ -377,7 +378,7 @@ export default function StatsPage({ songs, availableYears }) {
         const dayKey = `${y}/${mo}/${d}` // normalized
 
         songPerfs[song.song_name] = (songPerfs[song.song_name] || 0) + 1
-        if (song.artist) artistPerfs[song.artist] = (artistPerfs[song.artist] || 0) + 1
+        artists.forEach(artist => { artistPerfs[artist] = (artistPerfs[artist] || 0) + 1 })
 
         if (!monthlyPerfs[monthKey]) monthlyPerfs[monthKey] = {}
         monthlyPerfs[monthKey][song.song_name] = (monthlyPerfs[monthKey][song.song_name] || 0) + 1

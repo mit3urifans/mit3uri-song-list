@@ -61,20 +61,19 @@ export default function DidYouKnow() {
       }
     })
 
-    // 3. Songs added this year
+    // 3. Total performances this year
     const thisYear = new Date().getFullYear()
-    const thisYearSongs = song_list.filter(s => {
+    let thisYearPerfs = 0
+    song_list.forEach(s => {
       const dates = parseDates(s.date_list)
-      const yearDates = dates.filter(d => {
-        const parts = d.split('/')
-        return parseInt(parts[0]) === thisYear
+      dates.forEach(d => {
+        if (parseInt(d.split('/')[0]) === thisYear) thisYearPerfs++
       })
-      return yearDates.length > 0
     })
-    if (thisYearSongs.length > 0) {
+    if (thisYearPerfs > 0) {
       results.push({
         id: 'this-year',
-        text: `今年（${thisYear}年）已经唱了 ${thisYearSongs.length} 首歌！`,
+        text: `今年（${thisYear}年）已经演唱了 ${thisYearPerfs} 次！`,
       })
     }
 
@@ -180,6 +179,22 @@ export default function DidYouKnow() {
       results.push({
         id: 'not-recent',
         text: `《${mostStale.song.song_name}》已经 ${mostStale.daysSince} 天没唱过了！`,
+      })
+    }
+
+    // 12. Most-covered artist (split / for collaborations)
+    const artistSongCount = {}
+    song_list.forEach(s => {
+      const artists = (s.artist || '未知').split('/').map(a => a.trim()).filter(Boolean)
+      artists.forEach(artist => {
+        artistSongCount[artist] = (artistSongCount[artist] || 0) + 1
+      })
+    })
+    const topArtist = Object.entries(artistSongCount).sort((a, b) => b[1] - a[1])[0]
+    if (topArtist && topArtist[1] > 0) {
+      results.push({
+        id: 'most-artist',
+        text: `歌单里「${topArtist[0]}」的歌最多，共 ${topArtist[1]} 首！`,
       })
     }
 
