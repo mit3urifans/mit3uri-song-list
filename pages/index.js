@@ -540,28 +540,17 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
 
   //过滤歌单列表
   const filteredSongList = song_list
-    .map((song) => {
-      // 1. 处理收藏状态
-      if (typeof window !== 'undefined' && is_favorite_song(song.song_name)) {
-        song.is_local = true;
-      } else {
-        song.is_local = false;
-      }
-      // 饼干岁彩蛋，理电池无效
-      // if (searchBox === "bgs1314baobaomuamualovelove" && song.song_name === "One more time, One more chance") {
-      //   song.BVID = "BV1eVnueEEoc";
-      //   song.date_list = "2024-4-23";
-      //   song.song_count = 1;
-      // }
-
-      // 2. 预处理那年今日逻辑：判断 date_list 中是否有日期匹配今天
-      let isTodayInHistory = false;
-      if (song.date_list) {
-        isTodayInHistory = song.date_list.includes(matchStr1) || song.date_list.includes(matchStr2);
-      }
-      song.is_today = isTodayInHistory;
-      return song;
-    })
+    .map((song) => ({
+      ...song,
+      is_local: typeof window !== 'undefined' && is_favorite_song(song.song_name),
+      is_today: song.date_list
+        ? song.date_list.includes(matchStr1) || song.date_list.includes(matchStr2)
+        : false,
+      // 预解析日期，sort 里避免重复 split + Date.parse
+      _dates: song.date_list
+        ? song.date_list.split(/，/g).map(d => Date.parse(d)).filter(n => !isNaN(n)).sort((a, b) => a - b)
+        : [],
+    }))
     .filter(
       (song) =>
         //搜索
@@ -600,49 +589,42 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
             ? song.is_today
             : true))
     .sort((a, b) => {
-      if (filter_state.sorting_method === 'not_recently') {
-        const a_date = a.date_list.split(/，/g)
-          .map(a => Date.parse(a)).filter(a => !isNaN(a))
-          .sort();
-        const b_date = b.date_list.split(/，/g)
-          .map(a => Date.parse(a)).filter(a => !isNaN(a))
-          .sort();
-        return a_date[a_date.length - 1] - b_date[b_date.length - 1];
-      } else if (filter_state.sorting_method === 'infrequently') {
+      const method = filter_state.sorting_method;
+      if (method === 'not_recently') {
+        return (a._dates[a._dates.length - 1] || 0) - (b._dates[b._dates.length - 1] || 0);
+      }
+      if (method === 'infrequently') {
         return a.song_count - b.song_count;
-      } else if (filter_state.sorting_method === 'recently' || filter_state.sorting_method === 'default') {
-        const a_date = a.date_list.split(/，/g)
-          .map(a => Date.parse(a)).filter(a => !isNaN(a))
-          .sort();
-        const b_date = b.date_list.split(/，/g)
-          .map(a => Date.parse(a)).filter(a => !isNaN(a))
-          .sort();
-        return b_date[b_date.length - 1] - a_date[a_date.length - 1];
-      } else if (filter_state.sorting_method === 'frequently') {
+      }
+      if (method === 'recently' || method === 'default') {
+        return (b._dates[b._dates.length - 1] || 0) - (a._dates[a._dates.length - 1] || 0);
+      }
+      if (method === 'frequently') {
         return b.song_count - a.song_count;
-      }else if (filter_state.sorting_method === 'alphabetical') {
+      }
+      if (method === 'alphabetical') {
         return a.song_name.localeCompare(b.song_name, 'zh-CN');
-      }else if (filter_state.sorting_method === 'length') {
+      }
+      if (method === 'length') {
         const langDiff =
             getLanguageGroupRank(a.language) - getLanguageGroupRank(b.language);
         if (langDiff !== 0) return langDiff;
         return a.song_name.length - b.song_name.length;
-      } else if (filter_state.is_local) {
+      }
+      if (filter_state.is_local) {
         let a_time = favorite_date(a.song_name);
         let b_time = favorite_date(b.song_name);
         if (a_time && b_time) {
           return b_time - a_time;
-        } else {
-          return 0;
         }
-      } else {
         return 0;
       }
+      return 0;
     })
-    .map((song, idx) => {
-      song.idx = idx;
-      return song;
-    });
+    .map((song, idx) => ({
+      ...song,
+      idx,
+    }));
 
   EffThis.set_current_album(filteredSongList);
 
@@ -664,11 +646,8 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
   // props
   if (Array.isArray(prev.props) && Array.isArray(next.props)) {
     if (prev.props.length !== next.props.length) return false;
-    for (const [idx, prop] of Object.entries(prev.props)) {
-      if (!Object.is(prop, prev.props[idx])) {
-        console.log('not equal when iterating!!!');
-      }
-      if (!Object.is(prop, next.props[idx])) return false;
+    for (let i = 0; i < prev.props.length; i++) {
+      if (!Object.is(prev.props[i], next.props[i])) return false;
     }
   }
 
@@ -685,7 +664,6 @@ const FilteredList = memo(function FilteredList({ props: [ filter_state, searchB
     if (!Object.is(next[key], prev[key])) return false;
   }
 
-  console.log('result: equal');
   return true;
 });
 
@@ -715,14 +693,11 @@ function FixedTool() {
   const [to_top_btn_is_visible, set_to_top_btn_visibility] = useState(false);
 
   useEffect(() => {
-    //检测窗口滚动
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 600) {
-        set_to_top_btn_visibility(true);
-      } else {
-        set_to_top_btn_visibility(false);
-      }
-    });
+    const handleScroll = () => {
+      set_to_top_btn_visibility(window.scrollY > 600);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
