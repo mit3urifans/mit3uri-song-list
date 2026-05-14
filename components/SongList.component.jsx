@@ -19,6 +19,8 @@ import {
   useCallback
 } from "react";
 
+import Link from "next/link";
+
 import { 
   HiMiniPlay, 
   HiChevronRight,
@@ -111,11 +113,29 @@ const PillList = ({ props: [song_info, song_idx, BVID, EffThis,] }) => {
           : null
         }
       </span>
-      <span className="h-[1.2rem] inline-flex 
-        items-center rounded-full 
-        px-2 py-1 text-xs font-medium 
+      <Link
+        href={`/song/${song_info.index}/`}
+        className="ml-[0.5rem] h-[1.2rem] inline-flex
+        items-center rounded-full no-underline
+        px-2 py-1 text-xs font-medium
+        ring-1 ring-inset ring-secondary-label/50
+        text-secondary-label
+        sm:group-hover/tablename:text-white
+        sm:group-hover/tablename:bg-secondary-label
+        sm:hover:ring-white
+        transition-colors duration-100"
+        onClick={e => {
+          e.stopPropagation();
+          sessionStorage.setItem('songListScrollY', String(window.scrollY));
+        }}
+      >
+        详情
+      </Link>
+      <span className="ml-[0.5rem] h-[1.2rem] inline-flex
+        items-center rounded-full
+        px-2 py-1 text-xs font-medium
         ring-1 ring-inset ring-bilibili
-      text-bilibili 
+      text-bilibili
       sm:group-hover/tablename:text-white
       sm:group-hover/tablename:bg-bilibili
       sm:hover:ring-white
@@ -186,6 +206,16 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
           <span className="pointer-events-none">
             <HiMiniPlay className="ml-3 text-label text-[1rem]" />
           </span>
+          <Link
+            href={`/song/${songInfo.index}/`}
+            className="inline-flex relative items-center justify-center w-[2rem] h-[2rem] no-underline"
+            onClick={e => {
+              e.stopPropagation();
+              sessionStorage.setItem('songListScrollY', String(window.scrollY));
+            }}
+          >
+            <HiChevronRight className="text-secondary-label text-[1.1rem]" />
+          </Link>
           <span className="inline-flex relative items-center justify-center w-[2rem] h-[2rem]"
             onClick={(e) => {
               e.stopPropagation();
@@ -222,22 +252,34 @@ const CompactButtonList = ({ props: [songInfo, songIdx, BVID, EffThis,] }) => {
             }
           </span>
         </div>
-        <button className={`ml-[0.5rem] h-[1.2rem] inline-flex 
-          items-center rounded-full
-          px-2 py-1 font-medium 
-        text-secondary-label ring-1 ring-inset 
-        ring-secondary-label text-xs shrink-0
-          transition-colors duration-100 ${hasRecord ? 'hidden' : 'inline'}
-          hover:ring-white hover:text-white hover:bg-secondary-label`}
-          onClick={(e) => {
-            e.stopPropagation();
-            alert("暂时没有歌切记录；；");
-          }}
+        <div className={`sm:hidden flex flex-row ${hasRecord ? 'hidden' : 'inline'} items-center`}>
+          <Link
+            href={`/song/${songInfo.index}/`}
+            className="inline-flex relative items-center justify-center w-[2rem] h-[2rem] no-underline"
+            onClick={e => {
+              e.stopPropagation();
+              sessionStorage.setItem('songListScrollY', String(window.scrollY));
+            }}
           >
-          <div className="inline">
-            无记录
-          </div>
-        </button>
+            <HiChevronRight className="text-secondary-label text-[1.1rem]" />
+          </Link>
+          <button className={`ml-[0.5rem] h-[1.2rem] inline-flex
+            items-center rounded-full
+            px-2 py-1 font-medium
+          text-secondary-label ring-1 ring-inset
+          ring-secondary-label text-xs shrink-0
+            transition-colors duration-100
+            hover:ring-white hover:text-white hover:bg-secondary-label`}
+            onClick={(e) => {
+              e.stopPropagation();
+              alert("暂时没有歌切记录；；");
+            }}
+            >
+            <div className="inline">
+              无记录
+            </div>
+          </button>
+        </div>
         </div>
       </>
     );

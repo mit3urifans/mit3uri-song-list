@@ -15,6 +15,7 @@ import BiliPlayerModal from '../components/BiliPlayerModal.component'
 import SongListFilter from '../components/SongListFilter.component'
 import HeaderView from '../components/HeaderView.component'
 import FeaturedSongList from '../components/FeaturedSongList.component'
+import DidYouKnow from '../components/DidYouKnow.component'
 
 
 import imageLoader from '../utils/ImageLoader'
@@ -165,6 +166,20 @@ export default function Home() {
 
   useEffect(() => {
     migrate_localstorage(song_list);
+  }, []);
+
+  // 恢复从详情页返回时的滚动位置
+  useEffect(() => {
+    const savedY = sessionStorage.getItem('songListScrollY');
+    if (!savedY) return;
+    sessionStorage.removeItem('songListScrollY');
+    // 等待虚拟列表渲染完毕后再恢复滚动位置
+    const raf = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: parseInt(savedY, 10), behavior: 'instant' });
+      });
+    });
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   // EffThis.functions
@@ -444,6 +459,7 @@ export default function Home() {
                 return list;
             }
           } title="最近更新"/>
+          <DidYouKnow />
           <SongListFilter props={[filter_state, searchBox, EffThis]} />
           <FilteredList props={[filter_state, searchBox, EffThis]} />
         </section>
