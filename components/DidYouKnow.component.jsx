@@ -99,7 +99,7 @@ export default function DidYouKnow() {
       const d = new Date(earliestDate)
       results.push({
         id: 'earliest',
-        text: `最早演唱的歌曲是《${earliestSong.song_name}》，首次演唱于 ${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`,
+        text: `最早演唱的歌曲是《南风过隙》，首次演唱于2025年3月1日`,
       })
     }
 
